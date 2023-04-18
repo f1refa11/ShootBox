@@ -27,15 +27,15 @@ def loadPathTexture(path, name, antialias=True, size=None):
 		else:
 			return pygame.transform.scale(pygame.image.load(os.path.join(path, name)), size).convert_alpha()
 
-def gameExit():
-	pygame.exit()
-	exit()
-
 #loading config file
 config = openJSON("config.json")
 
 # initializing pygame
 pygame.init()
+
+def gameExit():
+	pygame.exit()
+	exit()
 
 #init screen
 screen = pygame.display.set_mode((1024, 576))
