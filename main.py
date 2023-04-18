@@ -51,15 +51,16 @@ enableGPUAcceleration = config["graphics"]["gpu"]
 # initializing pygame
 pygame.init()
 
-def gameExit():
-	pygame.exit()
-	exit()
-
 #init screen
 screen = pygame.display.set_mode((1024, 576))
 pygame.display.set_caption("ShootBox")
 pygame.mouse.set_visible(False)
 clock = pygame.time.Clock()
+
+def gameExit():
+	pygame.quit()
+	exit()
+
 
 #configuring essential paths
 rootPath = os.path.dirname(__file__)
@@ -226,7 +227,7 @@ def mainMenu():
 		pygame.display.update()
 
 chunks = []
-for x in range(512):
+for x in range(412):
 	for y in range(512):
 		chunks.append([x,y])
 
@@ -240,10 +241,10 @@ def game():
 	}
 	playerChunkPos = (player.x//(64*CHUNKSIZE), player.y//(64*CHUNKSIZE))
 	loadedChunks = []
-	for x in range(1):
-		for y in range(1):
-			x1 = playerChunkPos[0]+x
-			y1 = playerChunkPos[1]+y
+	for x in range(playerChunkPos[0]-renderDistance//2, playerChunkPos[0]+renderDistance//2):
+		for y in range(playerChunkPos[1]-renderDistance//2, playerChunkPos[1]+renderDistance//2):
+			x1 = x
+			y1 = y
 			if [x1,y1] in chunks:
 				loadedChunks.append([x1,y1])
 	print(loadedChunks)
@@ -254,13 +255,12 @@ def game():
 		if playerChunkPos != (player.x//(64*CHUNKSIZE), player.y//(64*CHUNKSIZE)):
 			playerChunkPos = (player.x//(64*CHUNKSIZE), player.y//(64*CHUNKSIZE))
 			loadedChunks.clear()
-			for x in range(1):
-				for y in range(1):
-					x1 = playerChunkPos[0]+x
-					y1 = playerChunkPos[1]+y
+			for x in range(playerChunkPos[0]-renderDistance//2, playerChunkPos[0]+renderDistance//2):
+				for y in range(playerChunkPos[1]-renderDistance//2, playerChunkPos[1]+renderDistance//2):
+					x1 = x
+					y1 = y
 					if [x1,y1] in chunks:
 						loadedChunks.append([x1,y1])
-			print(loadedChunks)
 
 		for chunk in loadedChunks:
 			chunkRect = pygame.Rect(chunk[0]*64*CHUNKSIZE, chunk[1]*64*CHUNKSIZE, 64*CHUNKSIZE, 64*CHUNKSIZE)
