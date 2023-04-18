@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#importing other libraries
+CHUNKSIZE = 8#importing other libraries
 import os,json,threading
 from sys import exit
 
@@ -72,6 +72,7 @@ loadingDisplayThread.setDaemon(True)
 loadingDisplayThread.start()
 
 #loading all paths
+blocksPath = os.path.join(texturesPath, "blocks")
 
 #loading all assets
 cursor = loadPathTexture(uiTexturesPath, "cursor.png", True, (64, 64))
@@ -81,6 +82,9 @@ buttonCornerRight = pygame.transform.flip(buttonCornerLeft, True, False)
 buttonCornerRightActive = pygame.transform.flip(buttonCornerLeftActive, True, False)
 buttonBody = loadPathTexture(uiTexturesPath, "buttonBody.png", True, (16, 64))
 buttonBodyActive = loadPathTexture(uiTexturesPath, "buttonBodyActive.png", True, (16, 64))
+
+grass = loadPathTexture(blocksPath, "grass.png", True, (64, 64))
+sand = loadPathTexture(blocksPath, "sand.png", True, (64, 64))
 
 #loading fonts
 fonts = []
@@ -146,6 +150,11 @@ class Button:
 		if event.type == MOUSEBUTTONDOWN and self.rect.collidepoint(pygame.mouse.get_pos()):
 			self.callback()
 
+#player class
+class Player:
+	def __init__(self, x, y) -> None:
+		pass
+
 #stopping loading screen after setting things up
 loadingScreen = False
 
@@ -184,11 +193,18 @@ def mainMenu():
 		screen.blit(cursor, pygame.mouse.get_pos())
 		pygame.display.update()
 
+chunks = [
+	[[0, 0], pygame.Surface((64*CHUNKSIZE, 64*CHUNKSIZE))]
+]
+
 def game():
 	while 1:
 		clock.tick(60)
+		screen.fill((51, 153, 218))
 
-		screen.fill()
+		for chunk in chunks:
+			chunk[1].fill((57, 194, 114))
+			screen.blit(chunk[1], (chunk[0][0]*CHUNKSIZE, chunk[0][1]*CHUNKSIZE))
 
 		for event in pygame.event.get():
 			if event.type == QUIT:
