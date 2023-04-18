@@ -29,6 +29,24 @@ def loadPathTexture(path, name, antialias=True, size=None):
 
 #loading config file
 config = openJSON("config.json")
+#defining config variables
+sfxVolume = config["sound"]["sfx"]
+musicVolume = config["sound"]["music"]
+
+fontAntialias = config["graphics"]["antialias"]["font"]
+uiAntialias = config["graphics"]["antialias"]["ui"]
+gameAntialias = config["graphics"]["antialias"]["game"]
+
+showGrass = config["graphics"]["showGrass"]
+smartRender = config["graphics"]["smartRender"]
+renderDistance = config["graphics"]["renderDistance"]
+blockSelection = config["graphics"]["blockSelection"]
+
+uiAnimations = config["graphics"]["animations"]["ui"]
+gameAnimations = config["graphics"]["animations"]["game"]
+
+isFullscreen = config["graphics"]["fullscreen"]
+enableGPUAcceleration = config["graphics"]["gpu"]
 
 # initializing pygame
 pygame.init()
