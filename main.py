@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-CHUNKSIZE = 8#importing other libraries
+CHUNKSIZE = 8
+#importing other libraries
 import os,json,threading
 from sys import exit
 
@@ -25,6 +26,10 @@ def loadPathTexture(path, name, antialias=True, size=None):
 			return pygame.transform.smoothscale(pygame.image.load(os.path.join(path, name)), size).convert_alpha()
 		else:
 			return pygame.transform.scale(pygame.image.load(os.path.join(path, name)), size).convert_alpha()
+
+def gameExit():
+	pygame.exit()
+	exit()
 
 #loading config file
 config = openJSON("config.json")
@@ -73,8 +78,10 @@ loadingDisplayThread.start()
 
 #loading all paths
 blocksPath = os.path.join(texturesPath, "blocks")
+playerPath = os.path.join(texturesPath, "player")
 
 #loading all assets
+#ui assets
 cursor = loadPathTexture(uiTexturesPath, "cursor.png", True, (64, 64))
 buttonCornerLeft = loadPathTexture(uiTexturesPath, "buttonCorner.png", True, (16, 64))
 buttonCornerLeftActive = loadPathTexture(uiTexturesPath, "buttonCornerActive.png", True, (16, 64))
@@ -83,8 +90,12 @@ buttonCornerRightActive = pygame.transform.flip(buttonCornerLeftActive, True, Fa
 buttonBody = loadPathTexture(uiTexturesPath, "buttonBody.png", True, (16, 64))
 buttonBodyActive = loadPathTexture(uiTexturesPath, "buttonBodyActive.png", True, (16, 64))
 
+#ground assets
 grass = loadPathTexture(blocksPath, "grass.png", True, (64, 64))
 sand = loadPathTexture(blocksPath, "sand.png", True, (64, 64))
+
+#player assets
+playerIdle = loadPathTexture(playerPath, "idle.png", True, (64, 64))
 
 #loading fonts
 fonts = []
@@ -147,13 +158,17 @@ class Button:
 		#rendering text
 		renderFont(self.text, self.textRect)
 	def eventHold(self, event):
+		#running callback if mouse clicked on button
 		if event.type == MOUSEBUTTONDOWN and self.rect.collidepoint(pygame.mouse.get_pos()):
 			self.callback()
 
 #player class
 class Player:
-	def __init__(self, x, y) -> None:
-		pass
+	def __init__(self, pos) -> None:
+		self.x, self.y = pos
+		self.speed = 3
+	def render(self, surface: pygame.Surface):
+		surface.blit(playerIdle, (self.x, self.y))
 
 #stopping loading screen after setting things up
 loadingScreen = False
@@ -182,8 +197,7 @@ def mainMenu():
 			# aboutBtn.eventHold(event)
 			exitBtn.eventHold(event)
 			if event.type == QUIT:
-				pygame.quit()
-				exit()
+				gameExit()
 		
 		playBtn.render()
 		settingsBtn.render()
@@ -193,23 +207,82 @@ def mainMenu():
 		screen.blit(cursor, pygame.mouse.get_pos())
 		pygame.display.update()
 
-chunks = [
-	[[0, 0], pygame.Surface((64*CHUNKSIZE, 64*CHUNKSIZE))]
-]
+chunks = []
+for x in range(512):
+	for y in range(512):
+		chunks.append([x,y])
 
 def game():
+	player = Player((8, 8))
+	pressedKeys = {
+		"up": False,
+		"down": False,
+		"left": False,
+		"right": False,
+	}
+	playerChunkPos = (player.x//(64*CHUNKSIZE), player.y//(64*CHUNKSIZE))
+	loadedChunks = []
+	for x in range(1):
+		for y in range(1):
+			x1 = playerChunkPos[0]+x
+			y1 = playerChunkPos[1]+y
+			if [x1,y1] in chunks:
+				loadedChunks.append([x1,y1])
+	print(loadedChunks)
 	while 1:
 		clock.tick(60)
 		screen.fill((51, 153, 218))
 
-		for chunk in chunks:
-			chunk[1].fill((57, 194, 114))
-			screen.blit(chunk[1], (chunk[0][0]*CHUNKSIZE, chunk[0][1]*CHUNKSIZE))
+		if playerChunkPos != (player.x//(64*CHUNKSIZE), player.y//(64*CHUNKSIZE)):
+			playerChunkPos = (player.x//(64*CHUNKSIZE), player.y//(64*CHUNKSIZE))
+			loadedChunks.clear()
+			for x in range(1):
+				for y in range(1):
+					x1 = playerChunkPos[0]+x
+					y1 = playerChunkPos[1]+y
+					if [x1,y1] in chunks:
+						loadedChunks.append([x1,y1])
+			print(loadedChunks)
+
+		for chunk in loadedChunks:
+			chunkRect = pygame.Rect(chunk[0]*64*CHUNKSIZE, chunk[1]*64*CHUNKSIZE, 64*CHUNKSIZE, 64*CHUNKSIZE)
+			chunkSurface = pygame.Surface((64*CHUNKSIZE, 64*CHUNKSIZE))
+			chunkSurface.fill((57, 194, 114))
+			screen.blit(chunkSurface, chunkRect)
 
 		for event in pygame.event.get():
+			if event.type == KEYDOWN:
+				if event.key == K_w:
+					pressedKeys["up"] = True
+				elif event.key == K_s:
+					pressedKeys["down"] = True
+				elif event.key == K_a:
+					pressedKeys["left"] = True
+				elif event.key == K_d:
+					pressedKeys["right"] = True
+				elif event.key == K_ESCAPE:
+					mainMenu()
+			elif event.type == KEYUP:
+				if event.key == K_w:
+					pressedKeys["up"] = False
+				elif event.key == K_s:
+					pressedKeys["down"] = False
+				elif event.key == K_a:
+					pressedKeys["left"] = False
+				elif event.key == K_d:
+					pressedKeys["right"] = False
 			if event.type == QUIT:
-				pygame.quit()
-				exit()
+				gameExit()
+
+		if pressedKeys["up"]:
+			player.y -= player.speed
+		if pressedKeys["down"]:
+			player.y += player.speed
+		if pressedKeys["left"]:
+			player.x -= player.speed
+		if pressedKeys["right"]:
+			player.x += player.speed
+		player.render(screen)
 
 		screen.blit(cursor, pygame.mouse.get_pos())
 		pygame.display.update()
