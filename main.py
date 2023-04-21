@@ -186,8 +186,32 @@ class Player:
 	def __init__(self, pos) -> None:
 		self.x, self.y = pos
 		self.speed = 3
+		self.rect = pygame.Rect(self.x, self.y, 64, 64)
+	def collisionCheck():
+		# if self.rect
+		pass
+	def up(self):
+		# if not self.rect.top < 3:
+		self.y -= self.speed
+	def down(self):
+		pass
+	def left(self):
+		# if not self.rect.left < 3:
+		self.x -= self.speed
+	def right(self):
+		pass
 	def render(self, surface: pygame.Surface):
+		#updating changed(possibly) variables
+		self.rect = pygame.Rect(self.x, self.y, 64, 64)
+
+		#rendering to screen
 		surface.blit(playerIdle, (self.x, self.y))
+		pygame.draw.rect(screen, (255, 0, 0), self.rect, 1)
+
+# class Block:
+# 	def __init__(self, pos, block):
+# 		self.pos = pos
+# 		self.type = block
 
 #stopping loading screen after setting things up
 loadingScreen = False
@@ -227,8 +251,8 @@ def mainMenu():
 		pygame.display.update()
 
 chunks = []
-for x in range(412):
-	for y in range(512):
+for x in range(1):
+	for y in range(1):
 		chunks.append([x,y])
 
 def game():
@@ -243,11 +267,12 @@ def game():
 	loadedChunks = []
 	for x in range(playerChunkPos[0]-renderDistance//2, playerChunkPos[0]+renderDistance//2):
 		for y in range(playerChunkPos[1]-renderDistance//2, playerChunkPos[1]+renderDistance//2):
-			x1 = x
-			y1 = y
-			if [x1,y1] in chunks:
-				loadedChunks.append([x1,y1])
-	print(loadedChunks)
+			if [x,y] in chunks:
+				loadedChunks.append([x,y])
+			else:
+				chunks.append([x,y])
+				loadedChunks.append([x,y])
+	cameraOffset = [0,0]
 	while 1:
 		clock.tick(60)
 		screen.fill((51, 153, 218))
@@ -257,16 +282,18 @@ def game():
 			loadedChunks.clear()
 			for x in range(playerChunkPos[0]-renderDistance//2, playerChunkPos[0]+renderDistance//2):
 				for y in range(playerChunkPos[1]-renderDistance//2, playerChunkPos[1]+renderDistance//2):
-					x1 = x
-					y1 = y
-					if [x1,y1] in chunks:
-						loadedChunks.append([x1,y1])
+					if [x,y] in chunks:
+						loadedChunks.append([x,y])
+					else:
+						chunks.append([x,y])
+						loadedChunks.append([x,y])
 
 		for chunk in loadedChunks:
-			chunkRect = pygame.Rect(chunk[0]*64*CHUNKSIZE, chunk[1]*64*CHUNKSIZE, 64*CHUNKSIZE, 64*CHUNKSIZE)
+			chunkRect = pygame.Rect(chunk[0]*64*CHUNKSIZE+cameraOffset[0], chunk[1]*64*CHUNKSIZE+cameraOffset[1], 64*CHUNKSIZE, 64*CHUNKSIZE)
 			chunkSurface = pygame.Surface((64*CHUNKSIZE, 64*CHUNKSIZE))
 			chunkSurface.fill((57, 194, 114))
 			screen.blit(chunkSurface, chunkRect)
+			pygame.draw.rect(screen, (255, 0, 0), chunkRect, 1)
 
 		for event in pygame.event.get():
 			if event.type == KEYDOWN:
@@ -293,11 +320,13 @@ def game():
 				gameExit()
 
 		if pressedKeys["up"]:
-			player.y -= player.speed
+			player.up()
+			# cameraOffset[1] += 3
 		if pressedKeys["down"]:
 			player.y += player.speed
+			# cameraOffset[1] -= 3
 		if pressedKeys["left"]:
-			player.x -= player.speed
+			player.left()
 		if pressedKeys["right"]:
 			player.x += player.speed
 		player.render(screen)
