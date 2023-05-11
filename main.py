@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-CHUNKSIZE = 8
-#importing other libraries
+#importing libraries
 import os,json,threading
 from sys import exit
 
@@ -11,7 +10,7 @@ os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 from pygame.locals import *
 
-# defining functions
+# defining JSON functions
 def openJSON(filename):
 	return json.load(open(filename, "r", encoding="utf-8"))
 
@@ -46,7 +45,7 @@ uiAnimations = config["graphics"]["animations"]["ui"]
 gameAnimations = config["graphics"]["animations"]["game"]
 
 isFullscreen = config["graphics"]["fullscreen"]
-enableGPUAcceleration = config["graphics"]["gpu"]
+GPUAcceleration = config["graphics"]["gpu"]
 
 # initializing pygame
 pygame.init()
@@ -113,6 +112,9 @@ buttonBodyActive = loadPathTexture(uiTexturesPath, "buttonBodyActive.png", True,
 grass = loadPathTexture(blocksPath, "grass.png", True, (64, 64))
 sand = loadPathTexture(blocksPath, "sand.png", True, (64, 64))
 
+#block assets
+
+
 #player assets
 playerIdle = loadPathTexture(playerPath, "idle.png", True, (64, 64))
 
@@ -129,6 +131,12 @@ def cacheFont(text, color = (255, 255, 255), size=24, antialiasing=True) -> pyga
 #render prerendered text(see cacheFont) to surface(default: screen)
 def renderFont(render, pos, surface: pygame.Surface = screen):
 	surface.blit(render, pos)
+
+#defining constants
+CHUNKSIZE = 8
+
+#defining variables
+fps = 75
 
 #defining classes
 #UI classes
@@ -225,7 +233,7 @@ def mainMenu():
 	aboutBtn = Button((12, settingsBtn.rect.bottom+4), "About", 240)
 	exitBtn = Button((12, aboutBtn.rect.bottom+4), "Exit", 240, callback=exit)
 	while 1:
-		clock.tick(60)
+		clock.tick(fps)
 		screen.fill((28, 21, 53))
 
 		screen.blit(logo, (12, 12))
@@ -241,6 +249,8 @@ def mainMenu():
 			exitBtn.eventHold(event)
 			if event.type == QUIT:
 				gameExit()
+			elif event.type == KEYDOWN:
+				game()
 		
 		playBtn.render()
 		settingsBtn.render()
@@ -274,7 +284,8 @@ def game():
 				loadedChunks.append([x,y])
 	cameraOffset = [0,0]
 	while 1:
-		clock.tick(60)
+		mousePos = pygame.mouse.get_pos()
+		clock.tick(fps)
 		screen.fill((51, 153, 218))
 
 		if playerChunkPos != (player.x//(64*CHUNKSIZE), player.y//(64*CHUNKSIZE)):
@@ -292,8 +303,26 @@ def game():
 			chunkRect = pygame.Rect(chunk[0]*64*CHUNKSIZE+cameraOffset[0], chunk[1]*64*CHUNKSIZE+cameraOffset[1], 64*CHUNKSIZE, 64*CHUNKSIZE)
 			chunkSurface = pygame.Surface((64*CHUNKSIZE, 64*CHUNKSIZE))
 			chunkSurface.fill((57, 194, 114))
+			if showGrass:
+				for x in range(CHUNKSIZE):
+					for y in range(CHUNKSIZE):
+						chunkSurface.blit(grass, (x*64, y*64))
+			if chunkRect.collidepoint(mousePos[0], mousePos[1]):
+				pygame.draw.rect(chunkSurface, (255, 255, 255), ((mousePos[0]-chunkRect.x)//64*64, (mousePos[1]-chunkRect.y)//64*64,64,64),2)
 			screen.blit(chunkSurface, chunkRect)
 			pygame.draw.rect(screen, (255, 0, 0), chunkRect, 1)
+
+		if pressedKeys["up"]:
+			player.up()
+			# cameraOffset[1] += 3
+		if pressedKeys["down"]:
+			player.y += player.speed
+			# cameraOffset[1] -= 3
+		if pressedKeys["left"]:
+			player.left()
+		if pressedKeys["right"]:
+			player.x += player.speed
+		player.render(screen)
 
 		for event in pygame.event.get():
 			if event.type == KEYDOWN:
@@ -316,22 +345,12 @@ def game():
 					pressedKeys["left"] = False
 				elif event.key == K_d:
 					pressedKeys["right"] = False
+			elif event.type == MOUSEBUTTONDOWN:
+				pass
 			if event.type == QUIT:
 				gameExit()
 
-		if pressedKeys["up"]:
-			player.up()
-			# cameraOffset[1] += 3
-		if pressedKeys["down"]:
-			player.y += player.speed
-			# cameraOffset[1] -= 3
-		if pressedKeys["left"]:
-			player.left()
-		if pressedKeys["right"]:
-			player.x += player.speed
-		player.render(screen)
-
-		screen.blit(cursor, pygame.mouse.get_pos())
+		screen.blit(cursor, mousePos)
 		pygame.display.update()
 	
 mainMenu()
