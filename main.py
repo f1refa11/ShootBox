@@ -277,11 +277,9 @@ def game():
 	loadedChunks = []
 	for x in range(playerChunkPos[0]-renderDistance//2, playerChunkPos[0]+renderDistance//2):
 		for y in range(playerChunkPos[1]-renderDistance//2, playerChunkPos[1]+renderDistance//2):
-			if [x,y] in chunks:
-				loadedChunks.append([x,y])
-			else:
+			if not [x,y] in chunks:
 				chunks.append([x,y])
-				loadedChunks.append([x,y])
+			loadedChunks.append([x,y])
 	cameraOffset = [0,0]
 	while 1:
 		mousePos = pygame.mouse.get_pos()
