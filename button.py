@@ -1,6 +1,6 @@
 import pygame,os,sys
 from pygame import MOUSEBUTTONDOWN
-from ..paths import *
+from paths import *
 
 def loadPathTexture(path, name, antialias=True, size=None):
 	if size == None:
@@ -71,7 +71,7 @@ class Button:
 			screen.blit(self.bodyTexture, self.bodyRect)
 			screen.blit(buttonCornerRight, self.cornerRightRect)
 		#rendering text
-		renderFont(self.text, self.textRect)
+		renderFont(self.text, self.textRect, screen)
 	def eventHold(self, event):
 		#running callback if mouse clicked on button
 		if event.type == MOUSEBUTTONDOWN and self.rect.collidepoint(pygame.mouse.get_pos()):

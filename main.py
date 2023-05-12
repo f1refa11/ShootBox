@@ -134,7 +134,7 @@ fps = 75
 
 #importing modules
 #widgets
-from widgets import Button
+from button import Button
 
 #player class
 class Player:
@@ -199,10 +199,10 @@ def mainMenu():
 			elif event.type == KEYDOWN:
 				game()
 		
-		playBtn.render()
-		settingsBtn.render()
-		aboutBtn.render()
-		exitBtn.render()
+		playBtn.render(screen)
+		settingsBtn.render(screen)
+		aboutBtn.render(screen)
+		exitBtn.render(screen)
 		
 		screen.blit(cursor, pygame.mouse.get_pos())
 		pygame.display.update()
