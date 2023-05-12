@@ -134,7 +134,7 @@ fps = 75
 
 #importing modules
 #widgets
-from widgets.button import Button
+from widgets import Button
 
 #player class
 class Player:
