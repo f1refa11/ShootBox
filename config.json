@@ -14,7 +14,8 @@
             "game": true
         },
         "fullscreen": false,
-        "gpu": false
+        "gpu": false,
+        "fps": 60
     },
     "sound": {
         "sfx": 100,
