@@ -19,3 +19,5 @@ gameAnimations = config["graphics"]["animations"]["game"]
 
 isFullscreen = config["graphics"]["fullscreen"]
 GPUAcceleration = config["graphics"]["gpu"]
+
+fpsLimit = config["graphics"]["fps"]
