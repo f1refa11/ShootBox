@@ -1,9 +1,10 @@
 import pygame
 from pygame import QUIT
-from funcs import *
+from funcs import gameExit
 from button import Button
 from game import game
-logo = loadPathTexture(uiTexturesPath, "logo.png")
+from main import cursor,logo
+
 def mainMenu(screen: pygame.Surface, clock: pygame.time.Clock):
 	logo.set_alpha(0)
 	
