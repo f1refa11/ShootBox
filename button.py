@@ -1,26 +1,8 @@
-import pygame,os,sys
+import pygame
 from pygame import MOUSEBUTTONDOWN
-from paths import *
-
-def loadPathTexture(path, name, antialias=True, size=None):
-	if size == None:
-		return pygame.image.load(os.path.join(path, name)).convert_alpha()
-	else:
-		if antialias:
-			return pygame.transform.smoothscale(pygame.image.load(os.path.join(path, name)), size).convert_alpha()
-		else:
-			return pygame.transform.scale(pygame.image.load(os.path.join(path, name)), size).convert_alpha()
-
-fonts = []
-for x in range(1, 100):
-	fonts.append(pygame.font.Font(os.path.join(resourcesPath, "font.ttf"), x))
-
-def cacheFont(text, color = (255, 255, 255), size=24, antialiasing=True) -> pygame.Surface:
-	return fonts[size].render(text, antialiasing, color)
-
-#render prerendered text(see cacheFont) to surface(default: screen)
-def renderFont(render, pos, surface: pygame.Surface):
-	surface.blit(render, pos)
+from paths import uiTexturesPath
+from funcs import loadPathTexture
+from fontmgr import cacheFont,renderFont
 
 buttonCornerLeft = loadPathTexture(uiTexturesPath, "buttonCorner.png", True, (16, 64))
 buttonCornerLeftActive = loadPathTexture(uiTexturesPath, "buttonCornerActive.png", True, (16, 64))
