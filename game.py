@@ -1,12 +1,19 @@
 import pygame
+from pygame.locals import *
 from player import Player
 from constants import CHUNKSIZE
-from confvar import renderDistance, showGrass
-chunks = []
-for x in range(1):
-	for y in range(1):
-		chunks.append([x,y])
+from confvar import renderDistance, showGrass, fpsLimit
+from main import screen,clock,cursor
+from funcs import *
+from paths import blocksPath
 def game():
+	from mainMenu import mainMenu
+	grass = loadPathTexture(blocksPath, "grass.png", True, (64, 64))
+	sand = loadPathTexture(blocksPath, "sand.png", True, (64, 64))
+	chunks = []
+	for x in range(1):
+		for y in range(1):
+			chunks.append([x,y])
 	player = Player((8, 8))
 	pressedKeys = {
 		"up": False,
@@ -24,7 +31,7 @@ def game():
 	cameraOffset = [0,0]
 	while 1:
 		mousePos = pygame.mouse.get_pos()
-		clock.tick(fps)
+		clock.tick(fpsLimit)
 		screen.fill((51, 153, 218))
 
 		if playerChunkPos != (player.x//(64*CHUNKSIZE), player.y//(64*CHUNKSIZE)):
