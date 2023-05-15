@@ -1,5 +1,6 @@
 import pygame,os
 from paths import resourcesPath
+from main import screen
 fonts = []
 for x in range(1, 100):
 	fonts.append(pygame.font.Font(os.path.join(resourcesPath, "font.ttf"), x))
@@ -9,5 +10,5 @@ def cacheFont(text, color = (255, 255, 255), size=24, antialiasing=True) -> pyga
 	return fonts[size].render(text, antialiasing, color)
 
 #render prerendered text(see cacheFont) to surface(default: screen)
-def renderFont(render, pos, surface: pygame.Surface):
+def renderFont(render, pos, surface: pygame.Surface = screen):
 	surface.blit(render, pos)
