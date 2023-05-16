@@ -2,15 +2,15 @@ import pygame
 from pygame import QUIT
 from funcs import gameExit
 from button import Button
-from game import game
-from main import cursor,logo
-
-def mainMenu(screen: pygame.Surface, clock: pygame.time.Clock):
+def mainMenu():
+	from main import cursor,logo,screen,clock
+	from game import game
+	from settingsMenu import settingsMenu
 	logo.set_alpha(0)
 	
 	#defining buttons
 	playBtn = Button((12, logo.get_height()+24), "Play", 240, callback=game)
-	settingsBtn = Button((12, playBtn.rect.bottom+4), "Settings", 240)
+	settingsBtn = Button((12, playBtn.rect.bottom+4), "Settings", 240, callback=settingsMenu)
 	aboutBtn = Button((12, settingsBtn.rect.bottom+4), "About", 240)
 	exitBtn = Button((12, aboutBtn.rect.bottom+4), "Exit", 240, callback=exit)
 	while 1:
@@ -25,7 +25,7 @@ def mainMenu(screen: pygame.Surface, clock: pygame.time.Clock):
 
 		for event in pygame.event.get():
 			playBtn.eventHold(event)
-			# settingsBtn.eventHold(event)
+			settingsBtn.eventHold(event)
 			# aboutBtn.eventHold(event)
 			exitBtn.eventHold(event)
 			if event.type == QUIT:
