@@ -11,7 +11,7 @@ buttonCornerRightActive = pygame.transform.flip(buttonCornerLeftActive, True, Fa
 buttonBody = loadPathTexture(uiTexturesPath, "buttonBody.png", True, (16, 64))
 buttonBodyActive = loadPathTexture(uiTexturesPath, "buttonBodyActive.png", True, (16, 64))
 class Button:
-	def __init__(self, pos, text, width=None, autoresizeOffset=8, callback=None):
+	def __init__(self, pos, text, width=240, autoresizeOffset=8, callback=None):
 		#saving arguments as variables
 		self.pos = pos
 		if width != None: self.width = width
