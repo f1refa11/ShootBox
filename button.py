@@ -23,7 +23,7 @@ class Button:
 		self.text = cacheFont(text)
 
 		#defining width if None
-		if self.width == None: self.width = self.text.get_width()+autoresizeOffset
+		if width == None: self.width = self.text.get_width()+autoresizeOffset
 
 		#defining button rects
 		self.rect = pygame.Rect(pos, (self.width, 64))
