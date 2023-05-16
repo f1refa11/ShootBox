@@ -51,6 +51,8 @@ loadingDisplayThread = threading.Thread(target=renderLoadScreen)
 loadingDisplayThread.setDaemon(True)
 loadingDisplayThread.start()
 
+cursor = loadPathTexture(uiTexturesPath, "cursor.png", True, (64, 64))
+
 #stopping loading screen after setting things up
 loadingScreen = False
 
