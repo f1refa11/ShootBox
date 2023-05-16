@@ -6,6 +6,7 @@ def mainMenu():
 	from main import cursor,logo,screen,clock
 	from game import game
 	from settingsMenu import settingsMenu
+	from playSelect import playSelect
 	logo.set_alpha(0)
 	
 	#defining buttons
