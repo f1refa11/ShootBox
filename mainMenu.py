@@ -4,13 +4,12 @@ from funcs import gameExit
 from button import Button
 def mainMenu():
 	from main import cursor,logo,screen,clock
-	from game import game
 	from settingsMenu import settingsMenu
 	from playSelect import playSelect
 	logo.set_alpha(0)
 	
 	#defining buttons
-	playBtn = Button((12, logo.get_height()+24), "Play", 240, callback=game)
+	playBtn = Button((12, logo.get_height()+24), "Play", 240, callback=playSelect)
 	settingsBtn = Button((12, playBtn.rect.bottom+4), "Settings", 240, callback=settingsMenu)
 	aboutBtn = Button((12, settingsBtn.rect.bottom+4), "About", 240)
 	exitBtn = Button((12, aboutBtn.rect.bottom+4), "Exit", 240, callback=exit)
