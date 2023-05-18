@@ -3,6 +3,7 @@ from pygame.locals import QUIT
 from funcs import gameExit
 from fontmgr import cacheFont,renderFont
 from button import Button
+from confvar import fpsLimit
 def playSelect():
 	from main import cursor,logo,screen,clock
 	from mainMenu import mainMenu
@@ -13,7 +14,7 @@ def playSelect():
 	multiplayerButton = Button((20,210), "Multiplayer", 240, callback=multiplayerSelect)
 	title = cacheFont("Settings",size=32)
 	while 1:
-		clock.tick(75)
+		clock.tick(fpsLimit)
 		screen.fill((28, 21, 53))
 
 		renderFont(title, (20,92), screen)

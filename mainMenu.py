@@ -2,6 +2,7 @@ import pygame
 from pygame import QUIT
 from funcs import gameExit
 from button import Button
+from confvar import fpsLimit
 def mainMenu():
 	from main import cursor,logo,screen,clock
 	from settingsMenu import settingsMenu
@@ -14,7 +15,7 @@ def mainMenu():
 	aboutBtn = Button((12, settingsBtn.rect.bottom+4), "About", 240)
 	exitBtn = Button((12, aboutBtn.rect.bottom+4), "Exit", 240, callback=exit)
 	while 1:
-		clock.tick(75)
+		clock.tick(fpsLimit)
 		screen.fill((28, 21, 53))
 
 		screen.blit(logo, (12, 12))

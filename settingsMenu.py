@@ -3,6 +3,7 @@ from pygame import QUIT
 from funcs import gameExit
 from fontmgr import cacheFont,renderFont
 from button import Button
+from confvar import fpsLimit
 def settingsMenu():
 	from main import cursor,logo,screen,clock
 	from mainMenu import mainMenu
@@ -15,7 +16,7 @@ def settingsMenu():
 	langButton = Button((20,280), "Language", 240, callback=langSettings)
 	title = cacheFont("Settings",size=32)
 	while 1:
-		clock.tick(75)
+		clock.tick(fpsLimit)
 		screen.fill((28, 21, 53))
 
 		renderFont(title, (20,92), screen)
