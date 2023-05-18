@@ -75,6 +75,8 @@ class TextArea:
 		if event.type == pygame.KEYDOWN:
 			if self.active:
 				if event.key == pygame.K_BACKSPACE:
+					self.text = self.text[:-1]
+					self.updateText()
 					self.bckSpaceCountdown = True
 		# backspace reset when KEYUP
 		if event.type == pygame.KEYUP:
