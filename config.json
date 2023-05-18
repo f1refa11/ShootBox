@@ -1,0 +1,25 @@
+{
+    "graphics": {
+        "antialias": {
+            "font": true,
+            "ui": true,
+            "game": true
+        },
+        "showGrass": false,
+        "smartRender": true,
+        "renderDistance": 5,
+        "blockSelection": true,
+        "animations": {
+            "ui": true,
+            "game": true
+        },
+        "fullscreen": false,
+        "gpu": false,
+        "fps": 60
+    },
+    "sound": {
+        "sfx": 100,
+        "music": 100
+    },
+    "lang": "en"
+}
