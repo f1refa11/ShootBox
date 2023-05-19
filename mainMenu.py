@@ -3,6 +3,7 @@ from pygame import QUIT
 from funcs import gameExit
 from button import Button
 from confvar import fpsLimit
+from sys import exit
 def mainMenu():
 	from main import cursor,logo,screen,clock
 	from settingsMenu import settingsMenu
