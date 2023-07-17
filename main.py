@@ -13,7 +13,7 @@ from pygame.locals import *
 from funcs import loadPathTexture
 
 # initializing pygame
-pygame.init()
+pygame.font.init()
 
 #init screen
 screen = pygame.display.set_mode((1024, 576))
