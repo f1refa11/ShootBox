@@ -10,7 +10,7 @@
 ![GitHub Sponsors](https://img.shields.io/github/sponsors/f1refa11?style=for-the-badge)
 ![GitHub issues](https://img.shields.io/github/issues/f1refa11/shootbox?color=%23FEE75C&style=for-the-badge)
 # ShootBox
-ShootBox это 2D Песочница с видом сверху, написанная на Python при помощи библиотеки Pygame, которая используется для создания прочих мультимедиа приложений. Данная игра является полной переписью кода АЛЬФА версии: https://github.com/f1refa11/shootbox-alpha
+ShootBox это 2D Песочница с видом сверху, написанная на Python при помощи библиотеки Pygame, которая используется для создания прочих мультимедиа приложений. Данная игра является полной переписью кода АЛЬФА версии, которая теперь является устаревшей: https://github.com/f1refa11/shootbox-alpha
 
 ## Разница между [ALPHA](https://github.com/f1refa11/shootbox-alpha) версией
 TODO
