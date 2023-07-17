@@ -1,4 +1,3 @@
-import json
 from funcs import openJSON
 config = openJSON("config.json")
 
