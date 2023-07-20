@@ -2,10 +2,10 @@ import orjson,os,pygame
 from sys import exit as appExit
 from paths import *
 def openJSON(filename):
-	return orjson.loads(open(filename, "r", encoding="utf-8"))
+	return orjson.loads(open(filename, "r", encoding="utf-8").read())
 
 def saveJSON(var, filename):
-	orjson.dumps(var, open(filename, "w", encoding="utf-8"))
+	open(filename, "w", encoding="utf-8").write(orjson.dumps(var))
 
 def loadPathTexture(path, name, antialias=True, size=None):
 	if size == None:
