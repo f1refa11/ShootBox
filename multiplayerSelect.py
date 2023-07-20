@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import QUIT
 from funcs import gameExit
 from fontmgr import cacheFont,renderFont
-from button import Button
+from widgets.button import Button
 from confvar import fpsLimit
 def multiplayerSelect():
 	from main import cursor,logo,screen,clock

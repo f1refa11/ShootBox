@@ -2,8 +2,8 @@ import pygame
 from pygame.locals import QUIT
 from funcs import gameExit
 from fontmgr import cacheFont,renderFont
-from button import Button
-from textArea import TextArea
+from widgets.button import Button
+from widgets.textArea import TextArea
 from confvar import fpsLimit
 def worldCreate():
 	from main import cursor,logo,screen,clock

@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import QUIT
-from button import Button
+from widgets.button import Button
 from funcs import gameExit
 from fontmgr import cacheFont,renderFont
 from confvar import fpsLimit

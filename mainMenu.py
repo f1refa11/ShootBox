@@ -1,7 +1,7 @@
 import pygame
 from pygame import QUIT
 from funcs import gameExit
-from button import Button
+from widgets.button import Button
 from confvar import fpsLimit
 from sys import exit
 def mainMenu():
