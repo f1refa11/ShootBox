@@ -5,7 +5,7 @@ from widgets.button import Button
 from confvar import fpsLimit, enableRPC
 from sys import exit
 def mainMenu():
-	from main import cursor,logo,screen,clock,RPC,rpcState
+	from main import cursor,logo,screen,clock
 	from settingsMenu import settingsMenu
 	from playSelect import playSelect
 	logo.set_alpha(0)
@@ -14,10 +14,11 @@ def mainMenu():
 	playBtn = Button((12, logo.get_height()+24), "Play", 240, callback=playSelect)
 	settingsBtn = Button((12, playBtn.rect.bottom+4), "Settings", 240, callback=settingsMenu)
 	aboutBtn = Button((12, settingsBtn.rect.bottom+4), "About", 240)
-	exitBtn = Button((12, aboutBtn.rect.bottom+4), "Exit", 240, callback=exit)
+	exitBtn = Button((12, aboutBtn.rect.bottom+4), "Exit", 240, callback=gameExit)
 
 	if enableRPC:
 		if rpcState != "menu":
+			from main import RPC,rpcState
 			RPC.update(
 				state="Простаивает",
 				details="В главном меню",

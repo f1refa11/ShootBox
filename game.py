@@ -3,12 +3,11 @@ from pygame.locals import *
 from player import Player
 from constants import CHUNKSIZE
 from confvar import renderDistance, showGrass, fpsLimit, enableRPC
-from main import screen,clock,cursor,RPC
+from main import screen,clock,cursor
 from funcs import *
 from paths import blocksPath
 def game():
 	from mainMenu import mainMenu
-	from main import rpcState
 	#loading resources
 	#textures
 	grass = loadPathTexture(blocksPath, "grass.png", True, (64, 64))
@@ -39,6 +38,7 @@ def game():
 	#discord rpc
 	if enableRPC:
 		if rpcState != "game":
+			from main import RPC,rpcState
 			RPC.update(
 				state="Играет",
 				details="Одиночная игра",
