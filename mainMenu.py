@@ -17,8 +17,8 @@ def mainMenu():
 	exitBtn = Button((12, aboutBtn.rect.bottom+4), "Exit", 240, callback=gameExit)
 
 	if enableRPC:
+		from main import RPC,rpcState
 		if rpcState != "menu":
-			from main import RPC,rpcState
 			RPC.update(
 				state="Простаивает",
 				details="В главном меню",

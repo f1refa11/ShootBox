@@ -37,8 +37,8 @@ def game():
 
 	#discord rpc
 	if enableRPC:
+		from main import RPC,rpcState
 		if rpcState != "game":
-			from main import RPC,rpcState
 			RPC.update(
 				state="Играет",
 				details="Одиночная игра",
