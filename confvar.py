@@ -4,6 +4,9 @@ config = openJSON("config.json")
 sfxVolume = config["sound"]["sfx"]
 musicVolume = config["sound"]["music"]
 
+enableRPC = config["rpc"]
+lang = config["lang"]
+
 fontAntialias = config["graphics"]["antialias"]["font"]
 uiAntialias = config["graphics"]["antialias"]["ui"]
 gameAntialias = config["graphics"]["antialias"]["game"]
