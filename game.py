@@ -2,18 +2,23 @@ import pygame
 from pygame.locals import *
 from player import Player
 from constants import CHUNKSIZE
-from confvar import renderDistance, showGrass, fpsLimit
-from main import screen,clock,cursor
+from confvar import renderDistance, showGrass, fpsLimit, enableRPC
+from main import screen,clock,cursor,RPC
 from funcs import *
 from paths import blocksPath
 def game():
 	from mainMenu import mainMenu
+	from main import rpcState
+	#loading resources
+	#textures
 	grass = loadPathTexture(blocksPath, "grass.png", True, (64, 64))
 	sand = loadPathTexture(blocksPath, "sand.png", True, (64, 64))
+	#generating first chunk
 	chunks = []
 	for x in range(1):
 		for y in range(1):
 			chunks.append([x,y])
+	#configuring player
 	player = Player((8, 8))
 	pressedKeys = {
 		"up": False,
@@ -21,6 +26,7 @@ def game():
 		"left": False,
 		"right": False,
 	}
+	#generating other chunks which are in renderDistance
 	playerChunkPos = (player.x//(64*CHUNKSIZE), player.y//(64*CHUNKSIZE))
 	loadedChunks = []
 	for x in range(playerChunkPos[0]-renderDistance//2, playerChunkPos[0]+renderDistance//2):
@@ -29,6 +35,16 @@ def game():
 				chunks.append([x,y])
 			loadedChunks.append([x,y])
 	cameraOffset = [0,0]
+
+	#discord rpc
+	if enableRPC:
+		if rpcState != "game":
+			RPC.update(
+				state="Играет",
+				details="Одиночная игра",
+				buttons= [{"label": "GitHub Repo", "url": "https://github.com/f1refa11/ShootBox"},]
+			)
+			rpcState = "game"
 	while 1:
 		mousePos = pygame.mouse.get_pos()
 		clock.tick(fpsLimit)

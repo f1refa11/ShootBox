@@ -2,10 +2,10 @@ import pygame
 from pygame import QUIT
 from funcs import gameExit
 from widgets.button import Button
-from confvar import fpsLimit
+from confvar import fpsLimit, enableRPC
 from sys import exit
 def mainMenu():
-	from main import cursor,logo,screen,clock
+	from main import cursor,logo,screen,clock,RPC,rpcState
 	from settingsMenu import settingsMenu
 	from playSelect import playSelect
 	logo.set_alpha(0)
@@ -15,6 +15,16 @@ def mainMenu():
 	settingsBtn = Button((12, playBtn.rect.bottom+4), "Settings", 240, callback=settingsMenu)
 	aboutBtn = Button((12, settingsBtn.rect.bottom+4), "About", 240)
 	exitBtn = Button((12, aboutBtn.rect.bottom+4), "Exit", 240, callback=exit)
+
+	if enableRPC:
+		if rpcState != "menu":
+			RPC.update(
+				state="Простаивает",
+				details="В главном меню",
+				buttons= [{"label": "GitHub Repo", "url": "https://github.com/f1refa11/ShootBox"},]
+			)
+			rpcState = "menu"
+	
 	while 1:
 		clock.tick(fpsLimit)
 		screen.fill((28, 21, 53))

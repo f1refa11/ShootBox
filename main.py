@@ -53,6 +53,18 @@ loadingDisplayThread.start()
 
 cursor = loadPathTexture(uiTexturesPath, "cursor.png", True, (64, 64))
 
+#connecting to discord rpc
+from confvar import enableRPC
+if enableRPC:
+	from pypresence import Presence, DiscordNotFound
+	client_id = "1129418228989436005"
+	RPC = Presence(client_id)
+	try:
+		RPC.connect()
+		rpcState = None
+	except DiscordNotFound:
+		enableRPC = False
+
 #stopping loading screen after setting things up
 loadingScreen = False
 
