@@ -1,8 +1,5 @@
 import orjson,os,pygame
 from sys import exit as appExit
-from confvar import enableRPC
-if enableRPC:
-	from main import RPC
 from paths import *
 def openJSON(filename):
 	return orjson.loads(open(filename, "r", encoding="utf-8").read())
@@ -20,7 +17,5 @@ def loadPathTexture(path, name, antialias=True, size=None):
 			return pygame.transform.scale(pygame.image.load(os.path.join(path, name)), size).convert_alpha()
 
 def gameExit():
-	if enableRPC:
-		RPC.close()
 	pygame.quit()
 	appExit()
