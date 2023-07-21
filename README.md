@@ -45,11 +45,11 @@ See more options by running: `python -m nuitka --help`
 *useful info for new contributors to help them get oriented*
 
 ## Project Structure
-- assets/ - customizable(can be changed even in built game) assets
-    - font.ttf - Fira Sans font(available on Google Font); can be changed to any font(even non-unicode, which may cause problems when rendering unicode text).
-    - lang/ - Localizations folder
-    - textures/ - Game textures(in good resolution)
-- widgets/ - UI elements
-- pages/ - Game screens(main menu, settings, game, etc.)
-- utils/ - Useful functions and other utilities separated for better readability
+- assets/ - customizable(can be changed even in built game) assets;
+    - font.ttf - Fira Sans font(available on Google Font); can be changed to any font(even non-unicode, which may cause problems when rendering unicode text);
+    - lang/ - Localizations folder(translations to other languages);
+    - textures/ - Game textures(in good resolution);
+- widgets/ - UI elements(widgets) modules
+- pages/ - Game scenes(main menu, settings, game, etc.);
+- utils/ - Useful functions and other utilities separated for better code readability.
 
