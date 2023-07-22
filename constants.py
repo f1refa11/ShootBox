@@ -1,1 +1,2 @@
 CHUNKSIZE = 8
+VER = "v0.2"
