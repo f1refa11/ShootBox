@@ -19,9 +19,25 @@ TODO
 TODO
 
 # Running
-We provide prebuilt binaries at Releases page: https://github.com/f1refa11/ShootBox/releases; but if you encountered some problems, you can always build the game by yourself by using instructions below.
+## GitHub Releases
+We provide prebuilt binaries at Releases page: https://github.com/f1refa11/ShootBox/releases; but if you encountered some problems, you can always use other ways below to launch the game.
+
+## Running from Source
+To run the game using the source and existing Python instance, you would need the following **dependencies**:
+- Python 3.8+(older versions may work, untested) with **pip installed**
+    - Pygame-ce(*recommended*) or Pygame 2.3.0+ - `pip3 install pygame-ce` or `pip3 install pygame`;
+    - pypresence 4.3.0+ - `pip3 install pypresence`;
+    - orjson 3.9.2+ - `pip3 install orjson`;
+
+Then, just clone the repo, go the downloaded directory, and launch the `main.py` script:
+```sh
+git clone https://github.com/f1refa11/ShootBox
+cd ShootBox
+python3 main.py
+```
 
 # Building
+- Check [here](#running-from-source) if you have the needed dependencies to build the game
 - Clone the repo: `git clone https://github.com/f1refa11/ShootBox`
 - Move to downloaded folder: `cd ShootBox`
 ## Using PyInstaller:
