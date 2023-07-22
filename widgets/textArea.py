@@ -3,6 +3,7 @@ from pygame import MOUSEBUTTONDOWN
 from paths import uiTexturesPath
 from funcs import loadPathTexture
 from fontmgr import cacheFont,renderFont
+import pyperclip
 textAreaLeft = loadPathTexture(uiTexturesPath, "textAreaCorner.png", True, (16, 64))
 textAreaLeftActive = loadPathTexture(uiTexturesPath, "textAreaCornerActive.png", True, (16, 64))
 textAreaRight = pygame.transform.flip(textAreaLeft, True, False)
@@ -71,11 +72,24 @@ class TextArea:
 				self.active = True
 			else:
 				self.active = False
-		# if KEYDOWN and backspace
-		if event.type == pygame.KEYDOWN and self.active and event.key == pygame.K_BACKSPACE:
-			self.text = self.text[:-1]
-			self.updateText()
-			self.bckSpaceCountdown = True
+		# KEYDOWN events
+		if event.type == pygame.KEYDOWN and self.active:
+			# backspace feature
+			if event.key == pygame.K_BACKSPACE:
+				self.text = self.text[:-1]
+				self.updateText()
+				self.bckSpaceCountdown = True
+			# shortcuts
+			if event.mod & pygame.KMOD_CTRL: # if ctrl pressed
+				if event.key == pygame.K_v: # paste
+					self.text += pyperclip.paste()
+					self.updateText()
+				elif event.key == pygame.K_z: # undo
+					self.text = self.text[:-4]
+					self.updateText()
+				elif event.key == pygame.K_BACKSPACE: # remove word
+					self.text = ' '.join(self.text.split(' ')[:-1])
+					self.updateText()
 		# backspace reset when KEYUP
 		if event.type == pygame.KEYUP:
 			self.bckSpaceCountdown = False
