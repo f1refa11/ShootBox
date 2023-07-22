@@ -72,12 +72,10 @@ class TextArea:
 			else:
 				self.active = False
 		# if KEYDOWN and backspace
-		if event.type == pygame.KEYDOWN:
-			if self.active:
-				if event.key == pygame.K_BACKSPACE:
-					self.text = self.text[:-1]
-					self.updateText()
-					self.bckSpaceCountdown = True
+		if event.type == pygame.KEYDOWN and self.active and event.key == pygame.K_BACKSPACE:
+			self.text = self.text[:-1]
+			self.updateText()
+			self.bckSpaceCountdown = True
 		# backspace reset when KEYUP
 		if event.type == pygame.KEYUP:
 			self.bckSpaceCountdown = False
@@ -85,11 +83,9 @@ class TextArea:
 			self.bckSpaceDelayCurrent = 0
 			self.bckSpaceEnabled = False
 		# text input event
-		if event.type == pygame.TEXTINPUT:
-			if self.active:
-				if len(self.text) <= self.maxLen:
-					self.text += event.text
-					self.updateText()
+		if event.type == pygame.TEXTINPUT and self.active and len(self.text) <= self.maxLen:
+			self.text += event.text
+			self.updateText()
 	def render(self, screen: pygame.Surface):
 		#backspace thing
 		if self.bckSpaceCountdown:
