@@ -1,0 +1,22 @@
+{
+    "Play": "Играть",
+    "Settings": "Настройки",
+    "About": "О игре",
+    "Exit": "Выйти",
+
+    "Back": "Назад",
+    "Singleplayer": "Одиночная игра",
+    "Multiplayer": "Мультиплеер",
+    "Create World": "Создать мир",
+    "Load World": "Загрузить мир",
+    "Create new World": "Создать новый мир",
+    "Create": "Создать",
+    "World name": "Название мира",
+    "Load existing World": "Загрузить существующий мир",
+    "Join Server": "Присоединиться",
+    "Host Server": "Запустить сервер",
+    
+    "Graphics": "Видео",
+    "Sound": "Аудио",
+    "Language": "Язык"
+}
