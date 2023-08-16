@@ -4,3 +4,4 @@ LANGS = {
     "en": "English",
     "ru": "Русский"
 }
+NOTIFY_TIMEOUT = 8
