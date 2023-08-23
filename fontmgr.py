@@ -5,8 +5,8 @@ for x in range(1, 100):
 	fonts.append(pygame.font.Font(os.path.join(resourcesPath, "font.ttf"), x))
 	
 #prerender text to return as Surface
-def cacheFont(text, color = (255, 255, 255), size=24, antialiasing=True) -> pygame.Surface:
-	return fonts[size].render(text, antialiasing, color)
+def cacheFont(text, color = (255, 255, 255), size=24, antialiasing=True, wraplength=0) -> pygame.Surface:
+	return fonts[size].render(text, antialiasing, color, wraplength=wraplength)
 
 #render prerendered text(see cacheFont) to surface(default: screen)
 def renderFont(render, pos, surface: pygame.Surface):
