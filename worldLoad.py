@@ -3,7 +3,7 @@ from pygame.locals import QUIT
 from funcs import gameExit
 from fontmgr import cacheFont,renderFont
 from widgets.button import Button
-from confvar import fpsLimit
+from confmgr import fpsLimit
 def worldLoad():
 	from main import cursor,logo,screen,clock
 	from singleplayerSelect import singleplayerSelect
