@@ -12,6 +12,7 @@ buttonBody = loadPathTexture(uiTexturesPath, "buttonBody.png", True, (16, 64))
 buttonBodyActive = loadPathTexture(uiTexturesPath, "buttonBodyActive.png", True, (16, 64))
 class Button:
 	def __init__(self, pos, text, width=None, autoresizeOffset=16, callback=None):
+		from local import loc
 		#saving arguments as variables
 		self.pos = pos
 		if width != None: self.width = width
@@ -20,7 +21,11 @@ class Button:
 		self.callback = callback
 
 		#prerendering text
-		self.text = cacheFont(text)
+		#trying translating text
+		try:
+			self.text = cacheFont(loc[text])
+		except:
+			self.text = cacheFont(text)
 
 		#defining width if None
 		if width == None: self.width = self.text.get_width()+autoresizeOffset

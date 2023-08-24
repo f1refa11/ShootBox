@@ -6,7 +6,11 @@ for x in range(1, 100):
 	
 #prerender text to return as Surface
 def cacheFont(text, color = (255, 255, 255), size=24, antialiasing=True, wraplength=0) -> pygame.Surface:
-	return fonts[size].render(text, antialiasing, color, wraplength=wraplength)
+	from local import loc
+	try:
+		return fonts[size].render(loc[text], antialiasing, color, wraplength=wraplength)
+	except:
+		return fonts[size].render(text, antialiasing, color, wraplength=wraplength)
 
 #render prerendered text(see cacheFont) to surface(default: screen)
 def renderFont(render, pos, surface: pygame.Surface):
