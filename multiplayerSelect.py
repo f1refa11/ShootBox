@@ -3,13 +3,13 @@ from pygame.locals import QUIT
 from funcs import gameExit
 from fontmgr import cacheFont,renderFont
 from widgets.button import Button
-from confvar import fpsLimit
+from confmgr import fpsLimit
 def multiplayerSelect():
 	from main import cursor,logo,screen,clock
 	from playSelect import playSelect
 	backButton = Button((20,20), "Back", callback=playSelect)
-	createButton = Button((20,140), "Create World", 240)
-	loadButton = Button((20,210), "Load World", 240)
+	join = Button((20,140), "Join Server", 240)
+	host = Button((20,210), "Host Server", 240)
 	title = cacheFont("Singleplayer",size=32)
 	while 1:
 		clock.tick(fpsLimit)
@@ -17,13 +17,11 @@ def multiplayerSelect():
 
 		renderFont(title, (20,92), screen)
 		backButton.render(screen)
-		createButton.render(screen)
-		loadButton.render(screen)
+		join.render(screen)
+		host.render(screen)
 
 		for event in pygame.event.get():
 			backButton.eventHold(event)
-			createButton.eventHold(event)
-			loadButton.eventHold(event)
 			if event.type == QUIT:
 				gameExit()
 		
