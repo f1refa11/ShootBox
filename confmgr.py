@@ -33,13 +33,11 @@ def validate(dictionary: dict):
     for key in list(dictionary.keys()):
         if type(dictionary[key]) == dict:
             keys.append(key)
-            print(keys)
             validate(dictionary[key])
         else:
             tmpData = validConfig
             for k in keys:
                 tmpData = tmpData[k]
-            print(tmpData)
             if type(dictionary[key]) != type(tmpData[key]):
                 pass
     keys.pop() if keys else False
