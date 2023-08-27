@@ -32,7 +32,6 @@ def langSettings():
 		renderFont(warning, (20,130), screen)
 		for langItem in langsSurfs.keys():
 			renderFont(langsSurfs[langItem], langsRects[langItem], screen)
-			pygame.draw.rect(screen, (255, 0, 0), langsRects[langItem], 1)
 		backButton.render(screen)
 		for event in pygame.event.get():
 			backButton.eventHold(event)
@@ -44,8 +43,7 @@ def langSettings():
 						langsSurfs[localLang] = cacheFont(LANGS[localLang], (177, 177, 177), 20)
 						langsSurfs[lng] = cacheFont(LANGS[lng], size=20)
 						localLang = lng
-						confmgr.config["lang"] = lng
-						confmgr.lang = confmgr.config["lang"]
+						confmgr.config["lang"] = confmgr.lang = lng
 						local.reload()
 						langSettings()
 		
