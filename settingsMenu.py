@@ -5,7 +5,7 @@ from fontmgr import cacheFont,renderFont
 from widgets.button import Button
 from confmgr import fpsLimit
 def settingsMenu():
-	from main import cursor,logo,screen,clock
+	from main import cursor,screen,clock
 	from mainMenu import mainMenu
 	from graphicsSettings import graphicsSettings
 	from soundSettings import soundSettings
