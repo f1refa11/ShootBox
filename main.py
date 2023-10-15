@@ -24,33 +24,8 @@ clock = pygame.time.Clock()
 #configuring essential paths
 from paths import uiTexturesPath
 
-#loading logo
+#loading main textures
 logo = loadPathTexture(uiTexturesPath, "logo.png")
-
-#setting essential for startup variables
-loadingScreenSize = (screen.get_width(), screen.get_height())
-loadingRect_base = pygame.Rect(loadingScreenSize[0]//2-200, loadingScreenSize[1]-88, 400, 24)
-loadingRect = pygame.Rect(loadingRect_base.x+4, loadingRect_base.y+4, 0, 16)
-loadingLogoRect = logo.get_rect()
-loadingLogoRect.x = loadingScreenSize[0]//2-224
-loadingLogoRect.y = loadingRect_base.y - 112
-loadingScreen = True
-
-#defining loading screen
-def renderLoadScreen():
-	global loadingRect
-	while loadingScreen:
-		screen.fill((11, 9, 24))
-		clock.tick(30)
-		pygame.draw.rect(screen, (255, 255, 255), loadingRect_base, 2)
-		pygame.draw.rect(screen, (255, 255, 255), loadingRect)
-		pygame.display.update()
-
-#setting up and starting loading screen thread
-loadingDisplayThread = threading.Thread(target=renderLoadScreen)
-loadingDisplayThread.setDaemon(True)
-loadingDisplayThread.start()
-
 cursor = loadPathTexture(uiTexturesPath, "cursor.png", True, (64, 64))
 
 #connecting to discord rpc
