@@ -17,7 +17,7 @@
         "gpu": false,
         "fps": 60
     },
-    "rpc": true,
+    "rpc": false,
     "sound": {
         "sfx": 100,
         "music": 100
