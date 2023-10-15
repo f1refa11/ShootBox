@@ -48,7 +48,7 @@ def renderLoadScreen():
 
 #setting up and starting loading screen thread
 loadingDisplayThread = threading.Thread(target=renderLoadScreen)
-loadingDisplayThread.setDaemon(True)
+loadingDisplayThread.daemon = True
 loadingDisplayThread.start()
 
 cursor = loadPathTexture(uiTexturesPath, "cursor.png", True, (64, 64))
