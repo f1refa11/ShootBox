@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 from player import Player
 from constants import CHUNKSIZE
-from confvar import renderDistance, showGrass, fpsLimit, enableRPC
+from confmgr import renderDistance, showGrass, fpsLimit, enableRPC
 from main import screen,clock,cursor
 from funcs import *
 from paths import blocksPath

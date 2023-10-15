@@ -4,7 +4,7 @@ from funcs import gameExit
 from fontmgr import cacheFont,renderFont
 from widgets.button import Button
 from widgets.textArea import TextArea
-from confvar import fpsLimit
+from confmgr import fpsLimit
 def worldCreate():
 	from main import cursor,logo,screen,clock
 	from singleplayerSelect import singleplayerSelect
