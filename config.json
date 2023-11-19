@@ -17,6 +17,7 @@
         "gpu": false,
         "fps": 60
     },
+    "showDirectionArrow": 1,
     "rpc": false,
     "sound": {
         "sfx": 100,
