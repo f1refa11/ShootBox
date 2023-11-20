@@ -7,7 +7,7 @@ def openJSON(filename):
 def saveJSON(var, filename):
 	open(filename, "w", encoding="utf-8").write(orjson.dumps(var))
 
-def loadPathTexture(path, name, antialias=True, size=None):
+def loadPathTexture(path, name, antialias=True, size=None) -> pygame.Surface:
 	if size == None:
 		return pygame.image.load(os.path.join(path, name)).convert_alpha()
 	else:
