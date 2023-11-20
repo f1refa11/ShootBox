@@ -5,7 +5,8 @@ from fontmgr import cacheFont,renderFont
 from widgets.button import Button
 from confmgr import fpsLimit
 def worldLoad():
-	from main import cursor,logo,screen,clock
+	from main import cursor,clock
+	from screenmgr import screen
 	from singleplayerSelect import singleplayerSelect
 	backButton = Button((20,20), "Back", callback=singleplayerSelect)
 	title = cacheFont("Load existing World", size=32)

@@ -6,8 +6,9 @@ from widgets.button import Button
 from widgets.textArea import TextArea
 from confmgr import fpsLimit
 def worldCreate():
-	from main import cursor,logo,screen,clock
 	from singleplayerSelect import singleplayerSelect
+	from main import cursor,clock
+	from screenmgr import screen
 	from game import game
 	backButton = Button((20,20), "Back", callback=singleplayerSelect)
 	worldName = TextArea((20,140), text="New world", placeholder="World name")

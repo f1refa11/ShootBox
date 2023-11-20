@@ -5,7 +5,8 @@ from fontmgr import cacheFont,renderFont
 from widgets.button import Button
 from confmgr import fpsLimit
 def playSelect():
-	from main import cursor,logo,screen,clock
+	from main import cursor,clock
+	from screenmgr import screen
 	from mainMenu import mainMenu
 	from singleplayerSelect import singleplayerSelect
 	from multiplayerSelect import multiplayerSelect

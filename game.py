@@ -3,7 +3,9 @@ from pygame.locals import *
 from player import Player
 from constants import CHUNKSIZE
 from confmgr import renderDistance, showGrass, fpsLimit, enableRPC
-from main import screen,clock,cursor
+from main import clock,cursor
+import screenmgr
+from screenmgr import screen
 from funcs import *
 from paths import blocksPath
 def game():
