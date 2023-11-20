@@ -17,9 +17,8 @@ from funcs import loadPathTexture
 pygame.font.init()
 
 #init screen
-screen = pygame.display.set_mode((1024, 576))
-pygame.display.set_caption("ShootBox")
-pygame.mouse.set_visible(False)
+import screenmgr
+screenmgr.init()
 clock = pygame.time.Clock()
 
 #configuring essential paths
