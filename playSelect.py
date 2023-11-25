@@ -13,7 +13,7 @@ def playSelect():
 	backButton = Button((20,20), "Back", callback=mainMenu)
 	singleplayerButton = Button((20,140), "Singleplayer", 240, callback=singleplayerSelect)
 	multiplayerButton = Button((20,210), "Multiplayer", 240, callback=multiplayerSelect)
-	title = cacheFont("Settings",size=32)
+	title = cacheFont("Select the play mode",size=32)
 	while 1:
 		clock.tick(fpsLimit)
 		screen.fill((28, 21, 53))
