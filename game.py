@@ -93,15 +93,17 @@ def game():
 			pygame.draw.rect(screen, (255, 0, 0), chunkRect, 1)
 
 		if pressedKeys["up"]:
-			player.up()
-			# cameraOffset[1] += 3
+			player.y -= player.speed
+			cameraOffset[1] += player.speed
 		if pressedKeys["down"]:
 			player.y += player.speed
-			# cameraOffset[1] -= 3
+			cameraOffset[1] -= player.speed
 		if pressedKeys["left"]:
-			player.left()
+			player.x -= player.speed
+			cameraOffset[0] += player.speed
 		if pressedKeys["right"]:
 			player.x += player.speed
+			cameraOffset[0] -= player.speed
 		player.render(screen)
 
 		for event in pygame.event.get():
