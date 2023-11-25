@@ -14,6 +14,20 @@ def game():
 	#textures
 	grass = loadPathTexture(blocksPath, "grass.png", True, (64, 64))
 	sand = loadPathTexture(blocksPath, "sand.png", True, (64, 64))
+	# gui
+
+	# hotbar
+	hotbarIndex = 2
+	hotbar = loadPathTexture(uiTexturesPath, "hotbar.png", True, (48, 48))
+	hotbarOutline = loadPathTexture(uiTexturesPath, "hotbar-outline.png", True, (48,48))
+	hotbarSurf = pygame.Surface((272, 48), pygame.SRCALPHA)
+	for x in range(5):
+		if x == hotbarIndex:
+			hotbarSurf.blit(hotbarOutline, (x*56, 0))
+		else:
+			hotbarSurf.blit(hotbar, (x*56, 0))
+	hotbarX, hotbarY = screenmgr.width//2-136, screenmgr.height-50
+
 	#generating first chunk
 	chunks = []
 	for x in range(1):
@@ -112,7 +126,27 @@ def game():
 			elif event.type == MOUSEBUTTONDOWN:
 				pass
 			if event.type == QUIT:
+			elif event.type == pygame.MOUSEBUTTONDOWN:
+				if event.button in [4,5]:
+					if event.button == 5:
+						if hotbarIndex > 0:
+							hotbarIndex -= 1
+						else:
+							hotbarIndex = 4
+					elif event.button == 4:
+						if hotbarIndex < 4:
+							hotbarIndex += 1
+						else:
+							hotbarIndex = 0
+					hotbarSurf.fill((0,0,0,0))
+					for x in range(5):
+						if x == hotbarIndex:
+							hotbarSurf.blit(hotbarOutline, (x*56, 0))
+						else:
+							hotbarSurf.blit(hotbar, (x*56, 0))
 				gameExit()
+
+		screen.blit(hotbarSurf, (hotbarX, hotbarY))
 
 		screen.blit(cursor, mousePos)
 		pygame.display.update()
