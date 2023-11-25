@@ -14,6 +14,9 @@ def game():
 	#textures
 	grass = loadPathTexture(blocksPath, "grass.png", True, (64, 64))
 	sand = loadPathTexture(blocksPath, "sand.png", True, (64, 64))
+
+	brickWall = loadPathTexture(blocksPath, "bricks.png", True, (64, 64))
+
 	# gui
 
 	# hotbar
