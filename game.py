@@ -126,9 +126,6 @@ def game():
 					pressedKeys["left"] = False
 				elif event.key == K_d:
 					pressedKeys["right"] = False
-			elif event.type == MOUSEBUTTONDOWN:
-				pass
-			if event.type == QUIT:
 			elif event.type == pygame.MOUSEBUTTONDOWN:
 				if event.button in [4,5]:
 					if event.button == 5:
@@ -147,6 +144,13 @@ def game():
 							hotbarSurf.blit(hotbarOutline, (x*56, 0))
 						else:
 							hotbarSurf.blit(hotbar, (x*56, 0))
+					
+			elif event.type == pygame.WINDOWSIZECHANGED:
+				screenmgr.width, screenmgr.height = event.x,event.y
+				hotbarX, hotbarY = screenmgr.width//2-136, screenmgr.height-50
+				player.rendX, player.rendY = screenmgr.width//2-32, screenmgr.height//2-32
+				cameraOffset = [(screenmgr.width//2-32-player.x),(screenmgr.height//2-32-player.y)]
+			if event.type == pygame.QUIT:
 				gameExit()
 
 		screen.blit(hotbarSurf, (hotbarX, hotbarY))
