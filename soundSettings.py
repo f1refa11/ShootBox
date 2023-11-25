@@ -5,7 +5,7 @@ from fontmgr import cacheFont,renderFont
 from widgets.button import Button
 from confmgr import fpsLimit
 def soundSettings():
-	from main import cursor,logo,clock
+	from main import cursor,clock
 	from screenmgr import screen
 	from settingsMenu import settingsMenu
 	backButton = Button((20,20), "Back", callback=settingsMenu)

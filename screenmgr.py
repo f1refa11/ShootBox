@@ -1,5 +1,5 @@
 # TODO: make all pygame window managment here(size update function, fullscreen etc.)
-import pygame,timeit
+import pygame
 from confmgr import GPUAcceleration, isFullscreen, useVSync
 
 width = 1024

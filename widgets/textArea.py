@@ -1,5 +1,4 @@
 import pygame
-from pygame import MOUSEBUTTONDOWN
 from paths import uiTexturesPath
 from funcs import loadPathTexture
 from fontmgr import cacheFont,renderFont
@@ -43,7 +42,7 @@ class TextArea:
 
 		# creating other rects
 		self.textRect = self.textRender.get_rect(x=0)
-		self.textRect.y = (self.textSurfaceRect.h-self.textRect.h)*0.5
+		self.textRect.y = (self.textSurfaceRect.h-self.textRect.h)/2
 		if self.textRect.w > self.textSurfaceRect.w:
 			self.textRect.right = self.textSurfaceRect.right-8
 

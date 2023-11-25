@@ -5,8 +5,8 @@ from confmgr import renderDistance, showGrass, fpsLimit, enableRPC
 from main import clock,cursor
 import screenmgr
 from screenmgr import screen
-from funcs import *
-from paths import blocksPath
+from funcs import loadPathTexture,gameExit
+from paths import blocksPath,uiTexturesPath
 from fontmgr import renderFont, cacheFont
 def game():
 	from mainMenu import mainMenu

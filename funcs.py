@@ -1,6 +1,5 @@
 import orjson,os,pygame
 from sys import exit as appExit
-from paths import *
 def openJSON(filename):
 	return orjson.loads(open(filename, "r", encoding="utf-8").read())
 
@@ -8,7 +7,7 @@ def saveJSON(var, filename):
 	open(filename, "w", encoding="utf-8").write(orjson.dumps(var))
 
 def loadPathTexture(path, name, antialias=True, size=None) -> pygame.Surface:
-	if size == None:
+	if size is None:
 		return pygame.image.load(os.path.join(path, name)).convert_alpha()
 	else:
 		if antialias:
