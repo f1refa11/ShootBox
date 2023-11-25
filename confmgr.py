@@ -27,22 +27,22 @@ except FileNotFoundError:
     config = validConfig
 
 # validating function
-keys = []
-def validate(dictionary: dict):
-    global keys
-    for key in list(dictionary.keys()):
-        if type(dictionary[key]) == dict:
-            keys.append(key)
-            validate(dictionary[key])
-        else:
-            tmpData = validConfig
-            for k in keys:
-                tmpData = tmpData[k]
-            if type(dictionary[key]) != type(tmpData[key]):
-                pass
-    keys.pop() if keys else False
+# keys = []
+# def validate(dictionary: dict):
+#     global keys
+#     for key in list(dictionary.keys()):
+#         if type(dictionary[key]) == dict:
+#             keys.append(key)
+#             validate(dictionary[key])
+#         else:
+#             tmpData = validConfig
+#             for k in keys:
+#                 tmpData = tmpData[k]
+#             if type(dictionary[key]) != type(tmpData[key]):
+#                 pass
+#     keys.pop() if keys else False
 
-validate(config)
+# validate(config)
 
 #defining config values as Python variables for better readability
 sfxVolume = config["sound"]["sfx"]
@@ -64,6 +64,10 @@ uiAnimations = config["graphics"]["animations"]["ui"]
 gameAnimations = config["graphics"]["animations"]["game"]
 
 isFullscreen = config["graphics"]["fullscreen"]
+fullscreenResolution = config["graphics"]["fullscreen"]
 GPUAcceleration = config["graphics"]["gpu"]
+useVSync = config["graphics"]["vsync"]
 
 fpsLimit = config["graphics"]["fps"]
+
+showDirectionArrow = config["showDirectionArrow"]
