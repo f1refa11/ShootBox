@@ -7,10 +7,13 @@ import screenmgr
 from screenmgr import screen
 from funcs import *
 from paths import blocksPath
+from fontmgr import renderFont, cacheFont
 def game():
 	from mainMenu import mainMenu
-	#loading resources
-	#textures
+	player = Player((8, 8))
+	# loading resources
+
+	# enviroment
 	grass = loadPathTexture(blocksPath, "grass.png", True, (64, 64))
 	sand = loadPathTexture(blocksPath, "sand.png", True, (64, 64))
 
@@ -31,12 +34,8 @@ def game():
 	hotbarX, hotbarY = screenmgr.width//2-136, screenmgr.height-50
 
 	#generating first chunk
-	chunks = []
-	for x in range(1):
-		for y in range(1):
-			chunks.append([x,y])
+	chunks = {(0,0):[]}
 	#configuring player
-	player = Player((8, 8))
 	pressedKeys = {
 		"up": False,
 		"down": False,
@@ -45,13 +44,13 @@ def game():
 	}
 	#generating other chunks which are in renderDistance
 	playerChunkPos = (player.x//(64*CHUNKSIZE), player.y//(64*CHUNKSIZE))
-	loadedChunks = []
+	loadedChunks = {}
 	for x in range(playerChunkPos[0]-renderDistance//2, playerChunkPos[0]+renderDistance//2):
 		for y in range(playerChunkPos[1]-renderDistance//2, playerChunkPos[1]+renderDistance//2):
-			if not [x,y] in chunks:
-				chunks.append([x,y])
-			loadedChunks.append([x,y])
-	cameraOffset = [0,0]
+			if (x,y) not in chunks.keys():
+				chunks[(x,y)] = []
+			loadedChunks[(x,y)] = []
+	cameraOffset = [(screenmgr.width//2-32-player.x),(screenmgr.height//2-32-player.y)]
 
 	#discord rpc
 	if enableRPC:
@@ -73,22 +72,30 @@ def game():
 			loadedChunks.clear()
 			for x in range(playerChunkPos[0]-renderDistance//2, playerChunkPos[0]+renderDistance//2):
 				for y in range(playerChunkPos[1]-renderDistance//2, playerChunkPos[1]+renderDistance//2):
-					if [x,y] in chunks:
-						loadedChunks.append([x,y])
-					else:
-						chunks.append([x,y])
-						loadedChunks.append([x,y])
+					if (x,y) not in chunks:
+						chunks[(x,y)] = []
+					loadedChunks[(x,y)] = chunks[(x,y)].copy()
 
 		for chunk in loadedChunks:
 			chunkRect = pygame.Rect(chunk[0]*64*CHUNKSIZE+cameraOffset[0], chunk[1]*64*CHUNKSIZE+cameraOffset[1], 64*CHUNKSIZE, 64*CHUNKSIZE)
 			chunkSurface = pygame.Surface((64*CHUNKSIZE, 64*CHUNKSIZE))
-			chunkSurface.fill((57, 194, 114))
 			if showGrass:
 				for x in range(CHUNKSIZE):
 					for y in range(CHUNKSIZE):
 						chunkSurface.blit(grass, (x*64, y*64))
+			else:
+				chunkSurface.fill((57, 194, 114)) # because we don't need to fill if we have showGrass
+
+			for block in loadedChunks[chunk]:
+				chunkSurface.blit(brickWall, (block["pos"][0]*64, block["pos"][1]*64))
+
+			# block select outline
 			if chunkRect.collidepoint(mousePos[0], mousePos[1]):
 				pygame.draw.rect(chunkSurface, (255, 255, 255), ((mousePos[0]-chunkRect.x)//64*64, (mousePos[1]-chunkRect.y)//64*64,64,64),2)
+
+			# debug chunk pos show(debug purposes)
+			renderFont(cacheFont("(%s,%s)"%(chunk[0],chunk[1])),(10,10),chunkSurface)
+
 			screen.blit(chunkSurface, chunkRect)
 			pygame.draw.rect(screen, (255, 0, 0), chunkRect, 1)
 
