@@ -14,8 +14,10 @@
             "game": true
         },
         "fullscreen": false,
+        "resolution": false,
         "gpu": false,
-        "fps": 60
+        "fps": 60,
+        "vsync": false
     },
     "showDirectionArrow": 1,
     "rpc": false,
