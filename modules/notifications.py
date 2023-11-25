@@ -4,7 +4,7 @@ from fontmgr import cacheFont, renderFont, fonts
 from paths import uiTexturesPath
 import pygame
 from pygame import MOUSEBUTTONDOWN
-from main import screen
+from screenmgr import screen
 notifyUnread = False
 notifyIconSelected = False
 panelOpened = True
