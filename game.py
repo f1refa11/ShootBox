@@ -1,5 +1,4 @@
 import pygame
-from pygame.locals import *
 from player import Player
 from constants import CHUNKSIZE
 from confmgr import renderDistance, showGrass, fpsLimit, enableRPC
@@ -106,25 +105,25 @@ def game():
 		player.render(screen)
 
 		for event in pygame.event.get():
-			if event.type == KEYDOWN:
-				if event.key == K_w:
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_w:
 					pressedKeys["up"] = True
-				elif event.key == K_s:
+				elif event.key == pygame.K_s:
 					pressedKeys["down"] = True
-				elif event.key == K_a:
+				elif event.key == pygame.K_a:
 					pressedKeys["left"] = True
-				elif event.key == K_d:
+				elif event.key == pygame.K_d:
 					pressedKeys["right"] = True
-				elif event.key == K_ESCAPE:
+				elif event.key == pygame.K_ESCAPE:
 					mainMenu()
-			elif event.type == KEYUP:
-				if event.key == K_w:
+			elif event.type == pygame.KEYUP:
+				if event.key == pygame.K_w:
 					pressedKeys["up"] = False
-				elif event.key == K_s:
+				elif event.key == pygame.K_s:
 					pressedKeys["down"] = False
-				elif event.key == K_a:
+				elif event.key == pygame.K_a:
 					pressedKeys["left"] = False
-				elif event.key == K_d:
+				elif event.key == pygame.K_d:
 					pressedKeys["right"] = False
 			elif event.type == pygame.MOUSEBUTTONDOWN:
 				if event.button in [4,5]:
