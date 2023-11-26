@@ -5,3 +5,13 @@ LANGS = {
     "ru": "Русский"
 }
 NOTIFY_TIMEOUT = 5
+CONTRIB_PROG = [
+    "FireFall",
+    "Egevtech"
+]
+CONTRIB_DESIGN = [
+    "FireFall"
+]
+TESTERS = [
+    "TheTSL"
+]
