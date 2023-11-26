@@ -5,7 +5,7 @@ from funcs import gameExit
 from fontmgr import cacheFont,renderFont
 from confmgr import fpsLimit
 def graphicsSettings():
-	from main import cursor,logo,clock
+	from main import cursor,clock
 	from screenmgr import screen
 	from settingsMenu import settingsMenu
 	backButton = Button((20,20), "Back", callback=settingsMenu)

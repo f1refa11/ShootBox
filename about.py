@@ -6,7 +6,7 @@ from fontmgr import cacheFont,renderFont
 from widgets.button import Button
 from confmgr import fpsLimit
 def about():
-	from main import cursor,logo,clock
+	from main import cursor,clock
 	from screenmgr import screen
 	from mainMenu import mainMenu
 	import webbrowser
