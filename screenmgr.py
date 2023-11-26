@@ -11,7 +11,7 @@ def init():
     global screen
     screen = pygame.display.set_mode((width, height), flags)
     pygame.display.set_caption("ShootBox")
-    # pygame.mouse.set_visible(False)
+    pygame.mouse.set_visible(False)
 
 def sizeReload(new: tuple[int, int], checkFlags=True): 
     global width, height, screen, flags
