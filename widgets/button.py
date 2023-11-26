@@ -15,7 +15,7 @@ class Button:
 		from local import loc
 		#saving arguments as variables
 		self.pos = pos
-		if width != None: self.width = width
+		if width is not None: self.width = width
 		self.text = text
 		self.active = False
 		self.callback = callback
@@ -28,7 +28,7 @@ class Button:
 			self.text = cacheFont(text)
 
 		#defining width if None
-		if width == None: self.width = self.text.get_width()+autoresizeOffset
+		if width is None: self.width = self.text.get_width()+autoresizeOffset
 
 		#defining button rects
 		self.rect = pygame.Rect(pos, (self.width, 64))
