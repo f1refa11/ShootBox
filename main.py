@@ -26,7 +26,7 @@ from paths import uiTexturesPath
 
 #loading main textures
 logo = loadPathTexture(uiTexturesPath, "logo.png")
-cursor = loadPathTexture(uiTexturesPath, "cursor.png", True, (30, 30))
+cursor = loadPathTexture(uiTexturesPath, "cursor.png", True, (32, 32))
 
 #connecting to discord rpc
 from confmgr import enableRPC
