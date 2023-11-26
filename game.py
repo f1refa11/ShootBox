@@ -10,7 +10,7 @@ from paths import blocksPath,uiTexturesPath
 from fontmgr import renderFont, cacheFont
 def game():
 	from mainMenu import mainMenu
-	player = Player((8, 8))
+	player = Player((0,0))
 	# loading resources
 
 	# enviroment
@@ -152,7 +152,51 @@ def game():
 							hotbarSurf.blit(hotbarOutline, (x*56, 0))
 						else:
 							hotbarSurf.blit(hotbar, (x*56, 0))
+				elif event.button == 3:
+					# calculate mouse position relative to game surface
+					mx,my = pygame.mouse.get_pos()
+					destX, destY = (mx-(screenmgr.width//2-32)+player.x)//64, (my-(screenmgr.height//2-32)+player.y)//64
+					chunkX, chunkY = destX//CHUNKSIZE, destY//CHUNKSIZE
+					resX, resY = destX, destY
+					resX = abs(resX)//8
+					resX *= 8
+					resX = abs(destX) - resX
+					if destX < 0 and resX != 0:
+						resX = 8 - resX
 					
+					resY = abs(resY)//8
+					resY *= 8
+					resY = abs(destY) - resY
+					if destY < 0 and resY != 0:
+						resY = 8 - resY
+
+					if {"pos":(resX,resY),"block":"lol"} not in chunks[(chunkX, chunkY)]:
+						chunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
+						loadedChunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
+				elif event.button == 1:
+					# calculate mouse position relative to game surface
+					mx,my = pygame.mouse.get_pos()
+					destX, destY = (mx-(screenmgr.width//2-32)+player.x)//64, (my-(screenmgr.height//2-32)+player.y)//64
+					chunkX, chunkY = destX//CHUNKSIZE, destY//CHUNKSIZE
+					resX, resY = destX, destY
+					resX = abs(resX)//8
+					resX *= 8
+					resX = abs(destX) - resX
+					if destX < 0 and resX != 0:
+						resX = 8 - resX
+					
+					resY = abs(resY)//8
+					resY *= 8
+					resY = abs(destY) - resY
+					if destY < 0 and resY != 0:
+						resY = 8 - resY
+
+					try:
+						chunks[(chunkX, chunkY)].remove({"pos":(resX,resY),"block":"lol"})
+						loadedChunks[(chunkX, chunkY)].remove({"pos":(resX,resY),"block":"lol"})
+					except:
+						pass
+
 			elif event.type == pygame.WINDOWSIZECHANGED:
 				screenmgr.width, screenmgr.height = event.x,event.y
 				hotbarX, hotbarY = screenmgr.width//2-136, screenmgr.height-50
