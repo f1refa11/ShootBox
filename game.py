@@ -52,6 +52,10 @@ def game():
 			loadedChunks[(x,y)] = []
 	cameraOffset = [(screenmgr.width//2-32-player.x),(screenmgr.height//2-32-player.y)]
 
+	mouseActionState = 0
+	actionDelay = 11
+	mouseTimeCount = actionDelay
+
 	#discord rpc
 	if enableRPC:
 		from main import RPC,rpcState
@@ -125,6 +129,10 @@ def game():
 					pressedKeys["right"] = True
 				elif event.key == pygame.K_ESCAPE:
 					mainMenu()
+				elif event.key == pygame.K_LSHIFT:
+					print(actionDelay)
+					actionDelay = 0
+					print(actionDelay)
 			elif event.type == pygame.KEYUP:
 				if event.key == pygame.K_w:
 					pressedKeys["up"] = False
@@ -134,6 +142,8 @@ def game():
 					pressedKeys["left"] = False
 				elif event.key == pygame.K_d:
 					pressedKeys["right"] = False
+				elif event.key == pygame.K_LSHIFT:
+					actionDelay = 11
 			elif event.type == pygame.MOUSEBUTTONDOWN:
 				if event.button in [4,5]:
 					if event.button == 5:
@@ -152,51 +162,14 @@ def game():
 							hotbarSurf.blit(hotbarOutline, (x*56, 0))
 						else:
 							hotbarSurf.blit(hotbar, (x*56, 0))
-				elif event.button == 3:
-					# calculate mouse position relative to game surface
-					mx,my = pygame.mouse.get_pos()
-					destX, destY = (mx-(screenmgr.width//2-32)+player.x)//64, (my-(screenmgr.height//2-32)+player.y)//64
-					chunkX, chunkY = destX//CHUNKSIZE, destY//CHUNKSIZE
-					resX, resY = destX, destY
-					resX = abs(resX)//8
-					resX *= 8
-					resX = abs(destX) - resX
-					if destX < 0 and resX != 0:
-						resX = 8 - resX
-					
-					resY = abs(resY)//8
-					resY *= 8
-					resY = abs(destY) - resY
-					if destY < 0 and resY != 0:
-						resY = 8 - resY
-
-					if {"pos":(resX,resY),"block":"lol"} not in chunks[(chunkX, chunkY)]:
-						chunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
-						loadedChunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
 				elif event.button == 1:
-					# calculate mouse position relative to game surface
-					mx,my = pygame.mouse.get_pos()
-					destX, destY = (mx-(screenmgr.width//2-32)+player.x)//64, (my-(screenmgr.height//2-32)+player.y)//64
-					chunkX, chunkY = destX//CHUNKSIZE, destY//CHUNKSIZE
-					resX, resY = destX, destY
-					resX = abs(resX)//8
-					resX *= 8
-					resX = abs(destX) - resX
-					if destX < 0 and resX != 0:
-						resX = 8 - resX
-					
-					resY = abs(resY)//8
-					resY *= 8
-					resY = abs(destY) - resY
-					if destY < 0 and resY != 0:
-						resY = 8 - resY
-
-					try:
-						chunks[(chunkX, chunkY)].remove({"pos":(resX,resY),"block":"lol"})
-						loadedChunks[(chunkX, chunkY)].remove({"pos":(resX,resY),"block":"lol"})
-					except:
-						pass
-
+					mouseActionState = 1 # break
+				elif event.button == 3:
+					mouseActionState = 2 # place
+			elif event.type == pygame.MOUSEBUTTONUP:
+				if event.button in [1,3]:
+					mouseActionState = 0 # reset
+					mouseTimeCount = actionDelay
 			elif event.type == pygame.WINDOWSIZECHANGED:
 				screenmgr.width, screenmgr.height = event.x,event.y
 				hotbarX, hotbarY = screenmgr.width//2-136, screenmgr.height-50
@@ -204,6 +177,39 @@ def game():
 				cameraOffset = [(screenmgr.width//2-32-player.x),(screenmgr.height//2-32-player.y)]
 			if event.type == pygame.QUIT:
 				gameExit()
+
+		if mouseActionState != 0: # one algorithm for 2 actions
+			print(mouseTimeCount)
+			if mouseTimeCount < actionDelay:
+				mouseTimeCount += 1
+			else:
+				mouseTimeCount = 0
+				# calculate mouse position relative to game surface
+				mx,my = pygame.mouse.get_pos()
+				destX, destY = (mx-(screenmgr.width//2-32)+player.x)//64, (my-(screenmgr.height//2-32)+player.y)//64
+				chunkX, chunkY = destX//CHUNKSIZE, destY//CHUNKSIZE
+				resX, resY = destX, destY
+				resX = abs(resX)//8
+				resX *= 8
+				resX = abs(destX) - resX
+				if destX < 0 and resX != 0:
+					resX = 8 - resX
+
+				resY = abs(resY)//8
+				resY *= 8
+				resY = abs(destY) - resY
+				if destY < 0 and resY != 0:
+					resY = 8 - resY
+				if mouseActionState == 1: # break
+					try:
+						chunks[(chunkX, chunkY)].remove({"pos":(resX,resY),"block":"lol"})
+						loadedChunks[(chunkX, chunkY)].remove({"pos":(resX,resY),"block":"lol"})
+					except ValueError:
+						pass
+				elif mouseActionState == 2: # place
+					if {"pos":(resX,resY),"block":"lol"} not in chunks[(chunkX, chunkY)]:
+						chunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
+						loadedChunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
 
 		screen.blit(hotbarSurf, (hotbarX, hotbarY))
 
