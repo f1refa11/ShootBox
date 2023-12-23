@@ -8,9 +8,10 @@ playerIdle = loadPathTexture(playerPath, "idle.png", True, (64, 64))
 if showDirectionArrow != 0: playerDirection = loadPathTexture(playerPath, "direction.png", True, (64,64)).convert_alpha()
 class Player:
 	def __init__(self, pos) -> None:
+		# TODO: remove this unneccessary stupid self.x self.y and use this fucking pygame.Rect
 		self.x, self.y = pos
 		self.speed = 3
-		self.rect = pygame.Rect(self.x, self.y, 64, 64)
+		self.rect = pygame.Rect(self.x+16, self.y+16, 48, 48)
 
 		self.rendX, self.rendY = screenmgr.width//2-32, screenmgr.height//2-32
 
@@ -30,6 +31,7 @@ class Player:
 	def right(self):
 		pass
 	def render(self, surface: pygame.Surface):
+		self.rect.x, self.rect.y = self.x+16, self.y+16
 		mx,my = pygame.mouse.get_pos()
 		dx,dy = mx-self.rendX-32, my-self.rendY-32
 		angle = -math.degrees(math.atan2(dy,dx))-90
@@ -51,8 +53,6 @@ class Player:
 						self.arrowOpacity = 255
 						self.arrowCount += 1
 		self.renderRect = tempTexture.get_rect(centerx=self.rendX+32,centery=self.rendY+32)
-		#updating changed(possibly) variables
-		self.rect = pygame.Rect(self.x, self.y, 64, 64)
 
 		#rendering to screen
 		surface.blit(tempTexture, self.renderRect)
