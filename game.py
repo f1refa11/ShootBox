@@ -107,31 +107,37 @@ def game():
 
 		for event in pygame.event.get():
 			if event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_w:
+				if event.key in [pygame.K_w, pygame.K_UP]:
 					pressedKeys["up"] = True
-				elif event.key == pygame.K_s:
+				elif event.key in [pygame.K_s, pygame.K_DOWN]:
 					pressedKeys["down"] = True
-				elif event.key == pygame.K_a:
+				elif event.key in [pygame.K_a, pygame.K_LEFT]:
 					pressedKeys["left"] = True
-				elif event.key == pygame.K_d:
+				elif event.key in [pygame.K_d, pygame.K_RIGHT]:
 					pressedKeys["right"] = True
 				elif event.key == pygame.K_ESCAPE:
 					mainMenu()
 				elif event.key == pygame.K_LSHIFT:
-					print(actionDelay)
 					actionDelay = 0
-					print(actionDelay)
+				elif event.key == pygame.K_LALT:
+					player.speed = 10
+				elif event.key == pygame.K_LCTRL:
+					player.speed = 5
 			elif event.type == pygame.KEYUP:
-				if event.key == pygame.K_w:
+				if event.key in [pygame.K_w, pygame.K_UP]:
 					pressedKeys["up"] = False
-				elif event.key == pygame.K_s:
+				elif event.key in [pygame.K_s, pygame.K_DOWN]:
 					pressedKeys["down"] = False
-				elif event.key == pygame.K_a:
+				elif event.key in [pygame.K_a, pygame.K_LEFT]:
 					pressedKeys["left"] = False
-				elif event.key == pygame.K_d:
+				elif event.key in [pygame.K_d, pygame.K_RIGHT]:
 					pressedKeys["right"] = False
 				elif event.key == pygame.K_LSHIFT:
 					actionDelay = 8
+				elif event.key == pygame.K_LALT:
+					player.speed = 3
+				elif event.key == pygame.K_LCTRL:
+					player.speed = 3
 			elif event.type == pygame.MOUSEBUTTONDOWN:
 				if event.button in [4,5]:
 					if event.button == 5:
@@ -175,32 +181,32 @@ def game():
 			cameraOffset[1] += player.speed
 			player.rect.y = player.y+16
 			if player.rect.collidelist(blockCollisions) != -1:
-				player.y += 3
-				cameraOffset[1] -= 3
+				player.y += player.speed
+				cameraOffset[1] -= player.speed
 				player.rect.y = player.y+16
 		if pressedKeys["down"]:
 			player.y += player.speed
 			cameraOffset[1] -= player.speed
 			player.rect.y = player.y+16
 			if player.rect.collidelist(blockCollisions) != -1:
-				player.y -= 3
-				cameraOffset[1] += 3
+				player.y -= player.speed
+				cameraOffset[1] += player.speed
 				player.rect.y = player.y+16
 		if pressedKeys["left"]:
 			player.x -= player.speed
 			cameraOffset[0] += player.speed
 			player.rect.x = player.x+16
 			if player.rect.collidelist(blockCollisions) != -1:
-				player.x += 3
-				cameraOffset[0] -= 3
+				player.x += player.speed
+				cameraOffset[0] -= player.speed
 				player.rect.x = player.x+16
 		if pressedKeys["right"]:
 			player.x += player.speed
 			cameraOffset[0] -= player.speed
 			player.rect.x = player.x+16
 			if player.rect.collidelist(blockCollisions) != -1:
-				player.x -= 3
-				cameraOffset[0] += 3
+				player.x -= player.speed
+				cameraOffset[0] += player.speed
 				player.rect.x = player.x+16
 
 		if mouseActionState != 0: # one algorithm for 2 actions
@@ -235,9 +241,11 @@ def game():
 						pass
 				elif mouseActionState == 2: # place
 					if {"pos":(resX,resY),"block":"lol"} not in chunks[(chunkX, chunkY)]:
-						blockCollisions.append(pygame.Rect(blockX*64, blockY*64, 64, 64))
-						chunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
-						loadedChunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
+						tempRect = pygame.Rect(blockX*64, blockY*64, 64, 64)
+						if not player.rect.colliderect(tempRect):
+							blockCollisions.append(tempRect)
+							chunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
+							loadedChunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
 
 		screen.blit(hotbarSurf, (hotbarX, hotbarY))
 
