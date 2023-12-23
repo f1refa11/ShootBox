@@ -53,8 +53,10 @@ def game():
 	cameraOffset = [(screenmgr.width//2-32-player.x),(screenmgr.height//2-32-player.y)]
 
 	mouseActionState = 0
-	actionDelay = 11
+	actionDelay = 8
 	mouseTimeCount = actionDelay
+
+	blockCollisions = []
 
 	#discord rpc
 	if enableRPC:
@@ -103,20 +105,6 @@ def game():
 			screen.blit(chunkSurface, chunkRect)
 			pygame.draw.rect(screen, (255, 0, 0), chunkRect, 1)
 
-		if pressedKeys["up"]:
-			player.y -= player.speed
-			cameraOffset[1] += player.speed
-		if pressedKeys["down"]:
-			player.y += player.speed
-			cameraOffset[1] -= player.speed
-		if pressedKeys["left"]:
-			player.x -= player.speed
-			cameraOffset[0] += player.speed
-		if pressedKeys["right"]:
-			player.x += player.speed
-			cameraOffset[0] -= player.speed
-		player.render(screen)
-
 		for event in pygame.event.get():
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_w:
@@ -143,7 +131,7 @@ def game():
 				elif event.key == pygame.K_d:
 					pressedKeys["right"] = False
 				elif event.key == pygame.K_LSHIFT:
-					actionDelay = 11
+					actionDelay = 8
 			elif event.type == pygame.MOUSEBUTTONDOWN:
 				if event.button in [4,5]:
 					if event.button == 5:
@@ -177,37 +165,77 @@ def game():
 				cameraOffset = [(screenmgr.width//2-32-player.x),(screenmgr.height//2-32-player.y)]
 			if event.type == pygame.QUIT:
 				gameExit()
+			# if player.rect.collidelist(blockCollisions) != -1:
+			# 	player.x -= 12
+			# 	cameraOffset[0] += 12
+		player.render(screen)
+
+		if pressedKeys["up"]:
+			player.y -= player.speed
+			cameraOffset[1] += player.speed
+			player.rect.y = player.y+16
+			if player.rect.collidelist(blockCollisions) != -1:
+				player.y += 3
+				cameraOffset[1] -= 3
+				player.rect.y = player.y+16
+		if pressedKeys["down"]:
+			player.y += player.speed
+			cameraOffset[1] -= player.speed
+			player.rect.y = player.y+16
+			if player.rect.collidelist(blockCollisions) != -1:
+				player.y -= 3
+				cameraOffset[1] += 3
+				player.rect.y = player.y+16
+		if pressedKeys["left"]:
+			player.x -= player.speed
+			cameraOffset[0] += player.speed
+			player.rect.x = player.x+16
+			if player.rect.collidelist(blockCollisions) != -1:
+				player.x += 3
+				cameraOffset[0] -= 3
+				player.rect.x = player.x+16
+		if pressedKeys["right"]:
+			player.x += player.speed
+			cameraOffset[0] -= player.speed
+			player.rect.x = player.x+16
+			if player.rect.collidelist(blockCollisions) != -1:
+				player.x -= 3
+				cameraOffset[0] += 3
+				player.rect.x = player.x+16
 
 		if mouseActionState != 0: # one algorithm for 2 actions
-			print(mouseTimeCount)
 			if mouseTimeCount < actionDelay:
 				mouseTimeCount += 1
 			else:
 				mouseTimeCount = 0
 				# calculate mouse position relative to game surface
 				mx,my = pygame.mouse.get_pos()
-				destX, destY = (mx-(screenmgr.width//2-32)+player.x)//64, (my-(screenmgr.height//2-32)+player.y)//64
-				chunkX, chunkY = destX//CHUNKSIZE, destY//CHUNKSIZE
-				resX, resY = destX, destY
+				destX, destY = (mx-(screenmgr.width//2-32)+player.x), (my-(screenmgr.height//2-32)+player.y)
+				# print(destX, destY, player.x, player.y)
+				blockX, blockY = (mx-(screenmgr.width//2-32)+player.x)//64, (my-(screenmgr.height//2-32)+player.y)//64
+				chunkX, chunkY = blockX//CHUNKSIZE, blockY//CHUNKSIZE
+				resX, resY = blockX, blockY
 				resX = abs(resX)//8
 				resX *= 8
-				resX = abs(destX) - resX
-				if destX < 0 and resX != 0:
+				resX = abs(blockX) - resX
+				if blockX < 0 and resX != 0:
 					resX = 8 - resX
 
 				resY = abs(resY)//8
 				resY *= 8
-				resY = abs(destY) - resY
-				if destY < 0 and resY != 0:
+				resY = abs(blockY) - resY
+				if blockY < 0 and resY != 0:
 					resY = 8 - resY
 				if mouseActionState == 1: # break
 					try:
 						chunks[(chunkX, chunkY)].remove({"pos":(resX,resY),"block":"lol"})
 						loadedChunks[(chunkX, chunkY)].remove({"pos":(resX,resY),"block":"lol"})
+						blockCollisions.remove(pygame.Rect(blockX*64, blockY*64, 64, 64))
 					except ValueError:
 						pass
 				elif mouseActionState == 2: # place
 					if {"pos":(resX,resY),"block":"lol"} not in chunks[(chunkX, chunkY)]:
+						blockCollisions.append(pygame.Rect(blockX*64, blockY*64, 64, 64))
 						chunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
 						loadedChunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
 
