@@ -1,4 +1,12 @@
-orjson>=3.8.0
-pygame-ce>=2.3.0
-pyperclip>=1.8.2
-pypresence>=4.3.0
+cffi==1.16.0 ; python_version >= "3.9" and python_version < "3.13" and platform_python_implementation == "PyPy"
+llvmlite==0.41.1 ; python_version >= "3.9" and python_version < "3.13"
+nuitka==1.8.6 ; python_version >= "3.9" and python_version < "3.13"
+numba==0.58.1 ; python_version >= "3.9" and python_version < "3.13"
+numpy==1.26.1 ; python_version >= "3.9" and python_version < "3.13"
+ordered-set==4.1.0 ; python_version >= "3.9" and python_version < "3.13"
+orjson==3.9.10 ; python_version >= "3.9" and python_version < "3.13"
+pycparser==2.21 ; python_version >= "3.9" and python_version < "3.13" and platform_python_implementation == "PyPy"
+pygame-ce==2.3.2 ; python_version >= "3.9" and python_version < "3.13"
+pyperclip==1.8.2 ; python_version >= "3.9" and python_version < "3.13"
+pypresence==4.3.0 ; python_version >= "3.9" and python_version < "3.13"
+zstandard==0.22.0 ; python_version >= "3.9" and python_version < "3.13"
