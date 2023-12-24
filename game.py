@@ -57,6 +57,7 @@ def game():
 	mouseTimeCount = actionDelay
 
 	blockCollisions = []
+	# TODO: load and unload blockCollisions' rects so collidelist doesn't take long to check
 
 	#discord rpc
 	if enableRPC:
@@ -75,6 +76,7 @@ def game():
 
 		if playerChunkPos != (player.x//(64*CHUNKSIZE), player.y//(64*CHUNKSIZE)):
 			playerChunkPos = (player.x//(64*CHUNKSIZE), player.y//(64*CHUNKSIZE))
+			# TODO: remove unnessessary chunks instead of fully clearing loadedChunks
 			loadedChunks.clear()
 			for x in range(playerChunkPos[0]-renderDistance//2, playerChunkPos[0]+renderDistance//2):
 				for y in range(playerChunkPos[1]-renderDistance//2, playerChunkPos[1]+renderDistance//2):
@@ -171,43 +173,40 @@ def game():
 				cameraOffset = [(screenmgr.width//2-32-player.x),(screenmgr.height//2-32-player.y)]
 			if event.type == pygame.QUIT:
 				gameExit()
-			# if player.rect.collidelist(blockCollisions) != -1:
-			# 	player.x -= 12
-			# 	cameraOffset[0] += 12
 		player.render(screen)
 
 		if pressedKeys["up"]:
 			player.y -= player.speed
 			cameraOffset[1] += player.speed
-			player.rect.y = player.y+16
+			player.rect.y = player.y+8
 			if player.rect.collidelist(blockCollisions) != -1:
 				player.y += player.speed
 				cameraOffset[1] -= player.speed
-				player.rect.y = player.y+16
+				player.rect.y = player.y+8
 		if pressedKeys["down"]:
 			player.y += player.speed
 			cameraOffset[1] -= player.speed
-			player.rect.y = player.y+16
+			player.rect.y = player.y+8
 			if player.rect.collidelist(blockCollisions) != -1:
 				player.y -= player.speed
 				cameraOffset[1] += player.speed
-				player.rect.y = player.y+16
+				player.rect.y = player.y+8
 		if pressedKeys["left"]:
 			player.x -= player.speed
 			cameraOffset[0] += player.speed
-			player.rect.x = player.x+16
+			player.rect.x = player.x+8
 			if player.rect.collidelist(blockCollisions) != -1:
 				player.x += player.speed
 				cameraOffset[0] -= player.speed
-				player.rect.x = player.x+16
+				player.rect.x = player.x+8
 		if pressedKeys["right"]:
 			player.x += player.speed
 			cameraOffset[0] -= player.speed
-			player.rect.x = player.x+16
+			player.rect.x = player.x+8
 			if player.rect.collidelist(blockCollisions) != -1:
 				player.x -= player.speed
 				cameraOffset[0] += player.speed
-				player.rect.x = player.x+16
+				player.rect.x = player.x+8
 
 		if mouseActionState != 0: # one algorithm for 2 actions
 			if mouseTimeCount < actionDelay:
@@ -216,7 +215,6 @@ def game():
 				mouseTimeCount = 0
 				# calculate mouse position relative to game surface
 				mx,my = pygame.mouse.get_pos()
-				destX, destY = (mx-(screenmgr.width//2-32)+player.x), (my-(screenmgr.height//2-32)+player.y)
 				# print(destX, destY, player.x, player.y)
 				blockX, blockY = (mx-(screenmgr.width//2-32)+player.x)//64, (my-(screenmgr.height//2-32)+player.y)//64
 				chunkX, chunkY = blockX//CHUNKSIZE, blockY//CHUNKSIZE
@@ -246,6 +244,11 @@ def game():
 							blockCollisions.append(tempRect)
 							chunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
 							loadedChunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
+
+		# pygame.draw.rect(screen, (255, 0, 0), (player.rendX+8, player.rendY+8, 48, 48), 1)
+
+		# for x in blockCollisions:
+		# 	pygame.draw.rect(screen, (255, 255, 0), x, 3)
 
 		screen.blit(hotbarSurf, (hotbarX, hotbarY))
 

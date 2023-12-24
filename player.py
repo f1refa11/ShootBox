@@ -11,7 +11,7 @@ class Player:
 		# TODO: remove this unneccessary stupid self.x self.y and use this fucking pygame.Rect
 		self.x, self.y = pos
 		self.speed = 3
-		self.rect = pygame.Rect(self.x+16, self.y+16, 48, 48)
+		self.rect = pygame.Rect(self.x+8, self.y+8, 48, 48)
 
 		self.rendX, self.rendY = screenmgr.width//2-32, screenmgr.height//2-32
 
@@ -31,7 +31,7 @@ class Player:
 	def right(self):
 		pass
 	def render(self, surface: pygame.Surface):
-		self.rect.x, self.rect.y = self.x+16, self.y+16
+		self.rect.x, self.rect.y = self.x+8, self.y+8
 		mx,my = pygame.mouse.get_pos()
 		dx,dy = mx-self.rendX-32, my-self.rendY-32
 		angle = -math.degrees(math.atan2(dy,dx))-90
