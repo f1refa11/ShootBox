@@ -235,15 +235,18 @@ def game():
 						chunks[(chunkX, chunkY)].remove({"pos":(resX,resY),"block":"lol"})
 						loadedChunks[(chunkX, chunkY)].remove({"pos":(resX,resY),"block":"lol"})
 						blockCollisions.remove(pygame.Rect(blockX*64, blockY*64, 64, 64))
-					except ValueError:
+					except:
 						pass
 				elif mouseActionState == 2: # place
-					if {"pos":(resX,resY),"block":"lol"} not in chunks[(chunkX, chunkY)]:
-						tempRect = pygame.Rect(blockX*64, blockY*64, 64, 64)
-						if not player.rect.colliderect(tempRect):
-							blockCollisions.append(tempRect)
-							chunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
-							loadedChunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
+					try:
+						if {"pos":(resX,resY),"block":"lol"} not in chunks[(chunkX, chunkY)]:
+							tempRect = pygame.Rect(blockX*64, blockY*64, 64, 64)
+							if not player.rect.colliderect(tempRect):
+									blockCollisions.append(tempRect)
+									chunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
+									loadedChunks[(chunkX, chunkY)].append({"pos":(resX,resY),"block":"lol"})
+					except:
+						pass
 
 		# pygame.draw.rect(screen, (255, 0, 0), (player.rendX+8, player.rendY+8, 48, 48), 1)
 
