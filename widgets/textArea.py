@@ -2,7 +2,6 @@ import pygame
 from paths import uiTexturesPath
 from funcs import loadPathTexture
 from fontmgr import cacheFont,renderFont
-import pyperclip
 textAreaLeft = loadPathTexture(uiTexturesPath, "textAreaCorner.png", True, (16, 64))
 textAreaLeftActive = loadPathTexture(uiTexturesPath, "textAreaCornerActive.png", True, (16, 64))
 textAreaRight = pygame.transform.flip(textAreaLeft, True, False)
@@ -81,7 +80,7 @@ class TextArea:
 			# shortcuts
 			if event.mod & pygame.KMOD_CTRL: # if ctrl pressed
 				if event.key == pygame.K_v: # paste
-					self.text += pyperclip.paste()
+					self.text += pygame.scrap.get_text()
 					self.updateText()
 				elif event.key == pygame.K_z: # undo
 					self.text = self.text[:-4]
