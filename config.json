@@ -7,7 +7,7 @@
         },
         "showGrass": false,
         "smartRender": true,
-        "renderDistance": 5,
+        "renderDistance": 4,
         "blockSelection": true,
         "animations": {
             "ui": true,
