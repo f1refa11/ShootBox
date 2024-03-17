@@ -1,13 +1,13 @@
 import pygame
 import path
 from funcs import loadPathTexture
-from fontmgr import cacheFont,renderFont
-textAreaLeft = loadPathTexture(uiTexturesPath, "textAreaCorner.png", True, (16, 64))
-textAreaLeftActive = loadPathTexture(uiTexturesPath, "textAreaCornerActive.png", True, (16, 64))
+from text import cacheFont,renderFont
+textAreaLeft = loadPathTexture(path.ui, "textAreaCorner.png", True, (16, 64))
+textAreaLeftActive = loadPathTexture(path.ui, "textAreaCornerActive.png", True, (16, 64))
 textAreaRight = pygame.transform.flip(textAreaLeft, True, False)
 textAreaRightActive = pygame.transform.flip(textAreaLeftActive, True, False)
-textAreaBody = loadPathTexture(uiTexturesPath, "textAreaBody.png", True, (16, 64))
-textAreaBodyActive = loadPathTexture(uiTexturesPath, "textAreaBodyActive.png", True, (16, 64))
+textAreaBody = loadPathTexture(path.ui, "textAreaBody.png", True, (16, 64))
+textAreaBodyActive = loadPathTexture(path.ui, "textAreaBodyActive.png", True, (16, 64))
 class TextArea:
 	def __init__(self, pos, width=240, maxLen=128, text="", placeholder="", color=(0,0,0)):
 		# passing arguments to variables
