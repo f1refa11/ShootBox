@@ -6,8 +6,8 @@ from main import clock,cursor
 import screenmgr
 from screenmgr import screen
 from funcs import loadPathTexture,gameExit
-from fontmgr import renderFont, cacheFont
 from path import blocksPath,uiTexturesPath
+from text import renderFont, cacheFont
 def game():
 	from mainMenu import mainMenu
 	player = Player((0,0))

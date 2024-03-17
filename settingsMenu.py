@@ -1,9 +1,15 @@
 import pygame
 from pygame import QUIT
-from funcs import gameExit
-from fontmgr import cacheFont,renderFont
+import funcs
+from text import newText
 from widgets.button import Button
+from widgets.menulist import MenuList
 from confmgr import fpsLimit
+from gettext import translation, gettext as _
+
+# TODO: make settings in one page with cool sidebar with icons(basically like VSCode)
+
+a = translation("shootbox", "./assets/lang", ['ru'], fallback=True)
 def settingsMenu():
 	from main import cursor, clock
 	from screenmgr import screen
@@ -13,30 +19,26 @@ def settingsMenu():
 	from langSettings import langSettings
 	from modulesMenu import modulesMenu
 	backButton = Button((20,20), "Back", callback=mainMenu)
-	graphicsButton = Button((20,140), "Graphics", 240, callback=graphicsSettings)
-	soundButton = Button((20,210), "Sound", 240, callback=soundSettings)
-	langButton = Button((20,280), "Language", 240, callback=langSettings)
+	menulist = MenuList((0,140), {
+		_("Graphics"): graphicsSettings,
+		_("Sound"): soundSettings,
+		_("Language"): langSettings
+	})
 	modulesButton = Button((20,350), "Modules", 240, callback=modulesMenu)
-	title = cacheFont("Settings",size=32)
+	title = newText("Settings",size=32)
 	while 1:
 		clock.tick(fpsLimit)
 		screen.fill((28, 21, 53))
 
-		renderFont(title, (20,92), screen)
+		screen.blit(title, (20,92))
 		backButton.render(screen)
-		graphicsButton.render(screen)
-		soundButton.render(screen)
-		langButton.render(screen)
-		modulesButton.render(screen)
+		menulist.render(screen)
 
 		for event in pygame.event.get():
 			backButton.eventHold(event)
-			graphicsButton.eventHold(event)
-			soundButton.eventHold(event)
-			langButton.eventHold(event)
-			modulesButton.eventHold(event)
+			menulist.eventHold(event)
 			if event.type == QUIT:
-				gameExit()
+				funcs.quit()
 		
 		screen.blit(cursor, pygame.mouse.get_pos())
 		pygame.display.update()

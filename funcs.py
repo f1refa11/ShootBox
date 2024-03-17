@@ -1,10 +1,13 @@
-import orjson,os,pygame
+import orjson
+import os
+import pygame
 from sys import exit as appExit
 def openJSON(filename):
 	return orjson.loads(open(filename, "r", encoding="utf-8").read())
 
 def saveJSON(var, filename):
-	open(filename, "w", encoding="utf-8").write(orjson.dumps(var))
+	with open(filename, "w", encoding="utf-8") as a:
+		a.write(orjson.dumps(var))
 
 def loadPathTexture(path, name, antialias=True, size=None) -> pygame.Surface:
 	if size is None:
@@ -15,6 +18,6 @@ def loadPathTexture(path, name, antialias=True, size=None) -> pygame.Surface:
 		else:
 			return pygame.transform.scale(pygame.image.load(os.path.join(path, name)), size).convert_alpha()
 
-def gameExit():
+def quit():
 	pygame.quit()
 	appExit()

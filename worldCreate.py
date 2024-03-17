@@ -1,12 +1,12 @@
 import pygame
 from pygame.locals import QUIT
 from funcs import gameExit
-from fontmgr import cacheFont,renderFont
+from text import cacheFont,renderFont
 from widgets.button import Button
 from widgets.textArea import TextArea
 from confmgr import fpsLimit
 def worldCreate():
-	from singleplayerSelect import singleplayerSelect
+	from worldMenu import singleplayerSelect
 	from main import cursor,clock
 	from screenmgr import screen
 	from game import game

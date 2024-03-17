@@ -13,14 +13,14 @@ def init():
     pygame.display.set_caption("ShootBox")
     pygame.mouse.set_visible(False)
 
-def sizeReload(new: tuple[int, int], checkFlags=True): 
+def sizeReload(new: tuple[int, int]): 
     global width, height, screen, flags
-    # flags generation
-    if checkFlags:
-        flags = pygame.RESIZABLE
-        if isFullscreen: 
-            flags |= pygame.FULLSCREEN
-            if GPUAcceleration: flags |= pygame.HWSURFACE
+    width, height = new
+    
+    if isFullscreen: # flags generation
+        flags |= pygame.FULLSCREEN
+        if GPUAcceleration:
+            flags |= pygame.HWSURFACE
     screen = pygame.display.set_mode(new, flags, vsync=int(useVSync))
 
 def switchFullscreen():
