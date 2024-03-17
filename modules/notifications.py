@@ -1,7 +1,7 @@
 # Notifications Module
 from funcs import loadPathTexture
 from fontmgr import cacheFont, renderFont, fonts
-from paths import uiTexturesPath
+import path
 import pygame
 from pygame import MOUSEBUTTONDOWN
 from screenmgr import screen

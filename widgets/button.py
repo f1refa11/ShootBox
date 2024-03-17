@@ -1,6 +1,6 @@
 import pygame
 from pygame import MOUSEBUTTONDOWN
-from paths import uiTexturesPath
+import path
 from funcs import loadPathTexture
 from fontmgr import cacheFont,renderFont
 

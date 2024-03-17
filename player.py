@@ -1,6 +1,6 @@
 import pygame
 from funcs import loadPathTexture
-from paths import playerPath
+from path import playerPath
 import math
 from confmgr import showDirectionArrow
 import screenmgr

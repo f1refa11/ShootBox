@@ -1,5 +1,5 @@
 import pygame
-from paths import uiTexturesPath
+import path
 from funcs import loadPathTexture
 from fontmgr import cacheFont,renderFont
 textAreaLeft = loadPathTexture(uiTexturesPath, "textAreaCorner.png", True, (16, 64))
