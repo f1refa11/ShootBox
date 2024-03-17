@@ -2,17 +2,17 @@ import pygame
 from pygame import MOUSEBUTTONDOWN
 import path
 from funcs import loadPathTexture
-from fontmgr import cacheFont,renderFont
+from text import newText
 
-buttonCornerLeft = loadPathTexture(uiTexturesPath, "buttonCorner.png", True, (16, 64))
-buttonCornerLeftActive = loadPathTexture(uiTexturesPath, "buttonCornerActive.png", True, (16, 64))
+buttonCornerLeft = loadPathTexture(path.ui, "buttonCorner.png", True, (16, 64))
+buttonCornerLeftActive = loadPathTexture(path.ui, "buttonCornerActive.png", True, (16, 64))
 buttonCornerRight = pygame.transform.flip(buttonCornerLeft, True, False)
 buttonCornerRightActive = pygame.transform.flip(buttonCornerLeftActive, True, False)
-buttonBody = loadPathTexture(uiTexturesPath, "buttonBody.png", True, (16, 64))
-buttonBodyActive = loadPathTexture(uiTexturesPath, "buttonBodyActive.png", True, (16, 64))
+buttonBody = loadPathTexture(path.ui, "buttonBody.png", True, (16, 64))
+buttonBodyActive = loadPathTexture(path.ui, "buttonBodyActive.png", True, (16, 64))
 class Button:
 	def __init__(self, pos, text, width=None, autoresizeOffset=16, callback=None):
-		from local import loc
+		from i18n import loc
 		#saving arguments as variables
 		self.pos = pos
 		if width is not None: self.width = width
@@ -23,9 +23,9 @@ class Button:
 		#prerendering text
 		#trying translating text
 		try:
-			self.text = cacheFont(loc[text])
+			self.text = newText(loc[text])
 		except:
-			self.text = cacheFont(text)
+			self.text = newText(text)
 
 		#defining width if None
 		if width is None: self.width = self.text.get_width()+autoresizeOffset
@@ -58,8 +58,9 @@ class Button:
 			screen.blit(self.bodyTexture, self.bodyRect)
 			screen.blit(buttonCornerRight, self.cornerRightRect)
 		#rendering text
-		renderFont(self.text, self.textRect, screen)
+		screen.blit(self.text, self.textRect)
 	def eventHold(self, event):
+		# TODO: combine eventHold and render functions???
 		#running callback if mouse clicked on button
 		if event.type == MOUSEBUTTONDOWN and self.rect.collidepoint(pygame.mouse.get_pos()):
 			self.callback()
